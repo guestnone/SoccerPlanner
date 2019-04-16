@@ -4,7 +4,7 @@ Definition of views.
 
 from datetime import datetime
 from django.shortcuts import render
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 
 def home(request):
     """Renders the home page."""
@@ -43,3 +43,16 @@ def about(request):
             'year':datetime.now().year,
         }
     )
+
+def manage(request):
+    """ All-encompassing view for management stuff """
+    return HttpResponse("NOT DONE, GO AWAY!!!")
+
+def account(request):
+    """ View for account management """
+    return HttpResponse("ALL THE SUFFERING!!!")
+
+def calendar(request):
+    """ View for displaying calendar """
+    return HttpResponse("ITS TIME TO STOP!!! NO MORE!!!")
+
