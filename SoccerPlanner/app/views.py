@@ -46,13 +46,45 @@ def about(request):
 
 def manage(request):
     """ All-encompassing view for management stuff """
-    return HttpResponse("NOT DONE, GO AWAY!!!")
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/manage.html',
+        {
+            'title':'Dashboard',
+        }
+    )
 
 def account(request):
     """ View for account management """
-    return HttpResponse("ALL THE SUFFERING!!!")
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/account.html',
+        {
+            'title':'Account',
+        }
+    )
 
 def calendar(request):
     """ View for displaying calendar """
-    return HttpResponse("ITS TIME TO STOP!!! NO MORE!!!")
+    assert isinstance(request, HttpRequest)
+    if request.user.is_authenticated:
+        return render(
+            request,
+            'app/calendar.html',
+            {
+                'title':'Calendar (editable)',
+            }
+        )
+    else:
+        return render(
+            request,
+            'app/calendar.html',
+            {
+                'title':'Calendar',
+            }
+        )
+
+
 
