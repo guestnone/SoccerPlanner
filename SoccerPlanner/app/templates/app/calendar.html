@@ -1,0 +1,22 @@
+﻿{% extends "app/layout.html" %}
+
+{% block content %}
+
+{% if user.is_authenticated %}
+<!-- Editable calendar -->
+
+<h2>{{ title }}</h2>
+
+<p>WIP.</p>
+
+{% else %}
+<!-- Public calendar, that the outsiders can see -->
+
+<h2>{{ title }}</h2>
+
+<p>WIP.</p>
+
+
+{% endif %}
+
+{% endblock %}
