@@ -57,6 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="app\static\web.config" />
+    <Content Include="app\templates\app\accountcreate.html" />
+    <Content Include="app\templates\app\accountcreatesuccessful.html" />
     <Content Include="app\templates\app\calendar.html" />
     <Content Include="app\templates\app\account.html" />
     <Content Include="app\templates\app\manage.html" />

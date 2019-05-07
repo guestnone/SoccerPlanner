@@ -11,6 +11,7 @@ from app import forms, views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    ## path('index/', views.home, name='index'),
     ##path('contact/', views.contact, name='contact'),
     path('about/', views.about, name='about'),
     path('login/',
@@ -29,5 +30,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('manage/', views.manage, name='manage'),
     path('calendar/', views.calendar, name='calendar'),
-    path('account/', views.account, name='account')
+    path('account/', views.account, name='account'),
+    path('accountcreate/', views.accountcreate, name='accountcreate'),
+    path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful')
 ]
