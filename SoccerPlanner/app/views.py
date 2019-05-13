@@ -3,8 +3,13 @@ Definition of views.
 """
 
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
+
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import login, authenticate
+
+from app.forms import SignUpForm
 
 def home(request):
     """Renders the home page."""
@@ -86,5 +91,26 @@ def calendar(request):
             }
         )
 
+def accountcreate(request):
+    """ View for creating user accounts """
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            return redirect('accountcreatesuccessful')
+    else:
+        form = SignUpForm()
+    return render(request, 'app/accountcreate.html', {'form': form})
 
+def accountcreatesuccessful(request):
+    """Renders the successful account creation page."""
+    assert isinstance(request, HttpRequest)
+    return render(
+        request,
+        'app/accountcreatesuccessful.html'
+    )
 
