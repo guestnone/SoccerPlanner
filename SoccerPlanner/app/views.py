@@ -8,8 +8,9 @@ from django.http import HttpRequest, HttpResponse
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from app import models
 
-from app.forms import SignUpForm
+from app.forms import SignUpForm, StageForm
 
 def home(request):
     """Renders the home page."""
@@ -106,11 +107,27 @@ def accountcreate(request):
         form = SignUpForm()
     return render(request, 'app/accountcreate.html', {'form': form})
 
+def stagecreate(request):     
+        if request.method == 'POST':
+            form = StageForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('stagecreatesuccessful')
+        else:
+            form = StageForm()
+        return render(request, 'app/stagecreate.html', {'form': form})
+    
 def accountcreatesuccessful(request):
     """Renders the successful account creation page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
         'app/accountcreatesuccessful.html'
+    )
+def stagecreatesuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stagecreatesuccessful.html'
     )
 

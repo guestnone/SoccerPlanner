@@ -3,9 +3,11 @@ Definition of forms.
 """
 
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from app.models import Stage,Match
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
@@ -26,3 +28,14 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+
+class StageForm(ModelForm):
+    name = forms.CharField(max_length = 20, required= False, help_text='Required')
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+    
+    class Meta:
+        model = Stage
+        listOfMatches = [Match]
+        fields = ('name','listOfMatches')
+    
