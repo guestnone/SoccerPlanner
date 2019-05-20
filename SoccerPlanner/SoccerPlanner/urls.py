@@ -32,5 +32,6 @@ urlpatterns = [
     path('calendar/', views.calendar, name='calendar'),
     path('account/', views.account, name='account'),
     path('accountcreate/', views.accountcreate, name='accountcreate'),
-    path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful')
+    path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
+    path('teamcreate/', views.teamcreate, name='teamcreate'),
 ]

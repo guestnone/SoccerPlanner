@@ -5,6 +5,8 @@ Definition of forms.
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from django.forms import ModelForm
+from app.models import Player, TeamSquad, Team
 from django.utils.translation import ugettext_lazy as _
 
 class BootstrapAuthenticationForm(AuthenticationForm):
@@ -26,3 +28,19 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
+class TeamSquadForm(forms.Form):
+    playerID = forms.ModelChoiceField(queryset = Player.objects.all(), empty_label="(Nothing)")
+
+    class Meta:
+        model=TeamSquad
+        fields=('playerID', )
+
+class TeamForm(forms.Form):
+    name = forms.CharField(max_length=20, required=True, help_text='Required.')
+    country = forms.CharField(max_length=20, required=True, help_text='Required.')
+    squad = forms.ModelChoiceField(queryset = TeamSquad.objects.all(), empty_label="(Nothing)")
+
+    class Meta:
+        model=Team
+        fields=('name', 'country', 'squad', )
