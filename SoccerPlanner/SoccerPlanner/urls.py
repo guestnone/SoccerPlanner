@@ -32,5 +32,7 @@ urlpatterns = [
     path('calendar/', views.calendarview.as_view(), name='calendar'),
     path('account/', views.account, name='account'),
     path('accountcreate/', views.accountcreate, name='accountcreate'),
-    path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful')
+    path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
+    path('event/new/$', views.event, name='event_new'),
+	path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
 ]

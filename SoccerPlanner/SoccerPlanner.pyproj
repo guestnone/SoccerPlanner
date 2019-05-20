@@ -63,6 +63,7 @@
     <Content Include="app\templates\app\accountcreatesuccessful.html" />
     <Content Include="app\templates\app\calendar.html" />
     <Content Include="app\templates\app\account.html" />
+    <Content Include="app\templates\app\event.html" />
     <Content Include="app\templates\app\manage.html" />
     <Content Include="app\templates\app\matchcreate.html" />
     <Content Include="app\templates\app\matchedit.html" />

@@ -7,7 +7,7 @@ import uuid
 from django.db import models
 
 from django.db.models import ForeignKey
-
+from django.urls import reverse
 
 class Player(models.Model):
     playerID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
@@ -103,15 +103,8 @@ class Event(models.Model):
         if self.end_time <= self.start_time:
             raise ValidationError('Ending hour must be after the starting hour')
 
-        events = Event.objects.filter(day=self.day)
-        if events.exists():
-            for event in events:
-                if self.check_overlap(event.start_time, event.end_time, self.start_time, self.end_time):
-                    raise ValidationError(
-                        'There is an overlap with another event: ' + str(event.day) + ', ' + str(
-                            event.start_time) + '-' + str(event.end_time))
     @property
     def get_html_url(self):
-        url = reverse('cal:event_edit', args=(self.id,))
-        return f'<a href="{url}"> {self.title} </a>'
+        url = reverse('event_edit', args=(self.id,))
+        return f'<a href="{url}"> {self.notes} </a>'
 

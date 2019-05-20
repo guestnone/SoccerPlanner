@@ -4,7 +4,7 @@ Definition of views.
 
 from datetime import *
 from calendar import monthrange, calendar
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
 
 from django.contrib.auth.decorators import login_required
@@ -13,7 +13,7 @@ from django.views import generic
 from django.utils.safestring import mark_safe
 from .models import *
 from .utils import Calendar
-from app.forms import SignUpForm
+from app.forms import *
 
 def home(request):
     """Renders the home page."""
@@ -127,7 +127,7 @@ class calendarview(generic.ListView):
         d = get_date(self.request.GET.get('month', None))
 
         # Instantiate our calendar class with today's year and date
-        cal = Calendar(d.year, d.month)
+        cal = Calendar(d.year, d.month, self.request)
 
         # Call the formatmonth method, which returns our calendar as a table
         html_cal = cal.formatmonth(withyear=True)
@@ -155,3 +155,16 @@ def next_month(d):
     next_month = last + timedelta(days=1)
     month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
     return month
+
+def event(request, event_id=None):
+    instance = Event()
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+    else:
+        instance = Event()
+
+    form = EventForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('calendar'))
+    return render(request, 'app/event.html', {'form': form})
