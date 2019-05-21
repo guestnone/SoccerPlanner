@@ -5,8 +5,47 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+<br>
+<h4>Edit squad of your team here</h4>
+<hr />
 
-<p>WIP.</p>
+<form method="post">
+    {% csrf_token %}
+    {% for field in team_squad_form %}
+    <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        <button type="submit">Add</button>
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </p>
+    {% endfor %}
+</form>
+
+<hr />
+<h4>Create your team!</h4>
+<hr />
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in team_form %}
+    <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit">Create</button>
+</form>
 
 {% else %}
 
