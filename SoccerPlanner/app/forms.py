@@ -7,7 +7,7 @@ from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-from app.models import Stage,Match,Event
+from .models import *
 from django.views.generic.edit import UpdateView
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""

@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from .models import *
 from django.shortcuts import get_object_or_404
-from app.forms import SignUpForm, StageForm, StageEditForm
+from app.forms import *
 from django.contrib import messages
 from django import forms
 from django.views import generic
