@@ -7,8 +7,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-from app import models
-from app.models import Stage
+from .models import *
 from django.shortcuts import get_object_or_404
 from app.forms import SignUpForm, StageForm, StageEditForm
 from django.contrib import messages
