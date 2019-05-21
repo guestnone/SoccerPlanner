@@ -48,14 +48,13 @@ class EventForm(ModelForm):
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         
-        class StageForm(ModelForm):
-    name = forms.CharField(max_length = 20, required= False, help_text='Required')
-    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
-    
-    class Meta:
-        model = Stage
-        listOfMatches = [Match]
-        fields = ('name','listOfMatches')
+    class StageForm(ModelForm):
+        name = forms.CharField(max_length = 20, required= False, help_text='Required')
+        listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+        class Meta:
+            model = Stage
+            listOfMatches = [Match]
+            fields = ('name','listOfMatches')
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
