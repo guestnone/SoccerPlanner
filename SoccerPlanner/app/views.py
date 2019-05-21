@@ -15,6 +15,7 @@ from django import forms
 from django.views import generic
 from django.utils.safestring import mark_safe
 
+
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -125,20 +126,38 @@ def accountcreatesuccessful(request):
         'app/accountcreatesuccessful.html'
     )
 
+
 """View for creating teams"""
+
+
 def teamcreate(request):
     if request.method == 'POST':
         team_squad_form = TeamSquadForm(request.POST)
         team_form = TeamForm(request.POST)
+        team_squad_edit_form = TeamSquadEditForm(request.POST)
+        team_edit_form = TeamEditForm(request.POST)
         if team_squad_form.is_valid():
+            if team_squad_edit_form.is_valid():
+                opt = team_squad_edit_form.cleaned_data['listOfSquads']
+                a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+                team_squad_edit_form = TeamSquadEditForm(request.POST, instance=a)
+                team_squad_edit_form.save()
+                return redirect('teamcreate')
             team_squad_form.save()
-            return redirect('teamcreate')
         elif team_form.is_valid():
+            if team_edit_form.is_valid():
+                opt = team_edit_form.cleaned_data['listOfTeams']
+                a = Team.objects.get(name=opt.name, country=opt.country, squad=opt.squad)
+                team_edit_form = TeamEditForm(request.POST, instance=a)
+                team_edit_form.save()
+                return redirect('teamcreate')
             team_form.save()
-            return redirect('teamcreate')
+        return redirect('teamcreate')
     else:
         team_squad_form = TeamSquadForm()
         team_form = TeamForm()
+        team_squad_edit_form = TeamSquadEditForm()
+        team_edit_form = TeamEditForm()
 
     return render(
         request,
@@ -147,18 +166,7 @@ def teamcreate(request):
             'title': 'Team Creator',
             'team_squad_form': team_squad_form,
             'team_form': team_form,
+            'team_squad_edit_form': team_squad_edit_form,
+            'team_edit_form': team_edit_form,
         }
     )
-
-#def teamedit(request):
-#    if request.method == 'POST':
-#        form = TeamSquadEditForm(request.POST)
-#        if form.is_valid():
-#            opt = form.cleaned_data['listOfPlayers']
-#            a = Player.objects.get(playerID = opt.playerID)
-#            form = TeamSquadEditForm(request.POST, instance = a)
-#            form.save()
-#            return redirect('teamcreate')
-#    else:
-#        form = TeamSquadEditForm()
-#    return render(request, 'app/teamcreate.html', {'form': form})
