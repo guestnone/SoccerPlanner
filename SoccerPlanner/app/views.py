@@ -11,7 +11,6 @@ from .models import *
 from app.forms import *
 from django.contrib import messages
 from django import forms
-from django.views import generic
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
