@@ -3,16 +3,27 @@
 {% block content %}
 
 {% if user.is_authenticated %}
+
+{% block title %}
+<h2>Calendar</h2>
+{% endblock %}
+
 <!-- Editable calendar -->
+{{ calendar }}
 
-<h2>{{ title }}</h2>
 
-<p>WIP.</p>
+<div class="clearfix">
+    <a class="btn btn-info left" href="{% url 'calendar' %}?{{ prev_month }}"> Previous Month </a>
+    <a class="btn btn-info right" href="{% url 'calendar' %}?{{ next_month }}"> Next Month </a>
+    <a class="btn btn-info right" href="{% url 'event_new' %}"> New Event </a>
+</div>
+
+
 
 {% else %}
 <!-- Public calendar, that the outsiders can see -->
 
-<h2>{{ title }}</h2>
+<h2>Calendar</h2>
 
 <p>WIP.</p>
 

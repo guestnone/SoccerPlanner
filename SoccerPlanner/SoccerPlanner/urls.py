@@ -29,12 +29,15 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
     path('manage/', views.manage, name='manage'),
-    path('calendar/', views.calendar, name='calendar'),
+    path('calendar/', views.calendarview.as_view(), name='calendar'),
     path('account/', views.account, name='account'),
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
+    path('event/new/$', views.event, name='event_new'),
+	  path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
     path('stagecreate/', views.stagecreate, name='stagecreate'),
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
     path('stageedit/',views.stageedit, name = 'stageedit'),
-    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful'),
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
+
 ]
