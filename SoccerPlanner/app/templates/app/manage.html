@@ -6,7 +6,20 @@
 
 <h2>{{ title }}</h2>
 
-<p>WIP.</p>
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href="{% url 'stagecreate' %}" class="btn btn-default">Create stage</a>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <a href="{% url 'stageedit' %}" class="btn btn-default">Edit stage</a>
+    </div>
+</div>
+
+
+
 
 {% else %}
 

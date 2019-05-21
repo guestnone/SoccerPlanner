@@ -34,5 +34,10 @@ urlpatterns = [
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('event/new/$', views.event, name='event_new'),
-	path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
+	  path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
+    path('stagecreate/', views.stagecreate, name='stagecreate'),
+    path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
+    path('stageedit/',views.stageedit, name = 'stageedit'),
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
+
 ]

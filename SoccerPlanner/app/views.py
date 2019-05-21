@@ -6,14 +6,16 @@ from datetime import *
 from calendar import monthrange, calendar
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpRequest, HttpResponse
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
+from app.forms import *
+from .models import *
+from django.contrib import messages
+from django import forms
 from django.views import generic
 from django.utils.safestring import mark_safe
-from .models import *
 from .utils import Calendar
-from app.forms import *
+
 
 def home(request):
     """Renders the home page."""
@@ -110,12 +112,48 @@ def accountcreate(request):
         form = SignUpForm()
     return render(request, 'app/accountcreate.html', {'form': form})
 
+def stagecreate(request):     
+        if request.method == 'POST':
+            form = StageForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('stagecreatesuccessful')
+        else:
+            form = StageForm()
+        return render(request, 'app/stagecreate.html', {'form': form})
+
+
+def stageedit(request):
+        if request.method == 'POST':
+            form = StageEditForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageEditForm(request.POST, instance = a)
+                form.save()
+                return redirect('stageeditsuccessful')
+        else:
+            form = StageEditForm()
+        return render(request, 'app/stageedit.html', {'form': form})
+        
 def accountcreatesuccessful(request):
     """Renders the successful account creation page."""
     assert isinstance(request, HttpRequest)
     return render(
         request,
         'app/accountcreatesuccessful.html'
+    )
+def stagecreatesuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stagecreatesuccessful.html'
+    )
+def stageeditsuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stageeditsuccessful.html'
     )
 
 class calendarview(generic.ListView):
