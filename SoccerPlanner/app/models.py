@@ -36,6 +36,8 @@ class Team(models.Model):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     squad = ForeignKey(TeamSquad, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 
 class Match(models.Model):
@@ -45,6 +47,8 @@ class Match(models.Model):
     points = models.IntegerField(default=0)
     points2 = models.IntegerField(default=0)
     shootersPerMatch = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.team1.name +" "+ self.team2.name
 
 
 class Tournament(models.Model):
@@ -70,6 +74,8 @@ class Tournament(models.Model):
 class Stage(models.Model):
     name = models.CharField(max_length=80)
     listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
 
 
 class Event(models.Model):

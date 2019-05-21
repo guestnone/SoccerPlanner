@@ -25,7 +25,7 @@ SECRET_KEY = '1e6a831c-c3ab-4f75-94c5-839acc52ea10'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'soccerpb.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost', 'soccerpb.azurewebsites.net', '127.0.0.1']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
