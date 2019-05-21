@@ -7,12 +7,9 @@ from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
-<<<<<<< HEAD
 from .models import *
-=======
-from app.models import Event
-from app.models import Stage,Match
->>>>>>> 36536c37f9a7bd6637876025d9d63be38afc6b74
+
+
 from django.views.generic.edit import UpdateView
 
 class BootstrapAuthenticationForm(AuthenticationForm):

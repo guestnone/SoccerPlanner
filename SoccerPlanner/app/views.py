@@ -10,19 +10,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from app.forms import *
 from .models import *
-<<<<<<< HEAD
 from app.forms import *
 from django.contrib import messages
 from django import forms
-=======
 from django.contrib import messages
-from django import forms
 from django.views import generic
 from django.utils.safestring import mark_safe
 from .utils import Calendar
 
 
->>>>>>> 36536c37f9a7bd6637876025d9d63be38afc6b74
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
