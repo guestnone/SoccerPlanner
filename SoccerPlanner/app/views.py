@@ -9,7 +9,11 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 
-from app.forms import SignUpForm, TeamSquadForm, TeamForm
+from app.forms import *
+from .models import *
+from django import forms
+from django.views import generic
+from django.utils.safestring import mark_safe
 
 def home(request):
     """Renders the home page."""
@@ -126,10 +130,12 @@ def teamcreate(request):
     if request.method == 'POST':
         team_squad_form = TeamSquadForm(request.POST)
         team_form = TeamForm(request.POST)
-        if team_squad_form.is_valid() or team_form.is_valid():
+        if team_squad_form.is_valid():
             team_squad_form.save()
+            return redirect('teamcreate')
+        elif team_form.is_valid():
             team_form.save()
-            return redirect('accountcreatesuccessful')
+            return redirect('teamcreate')
     else:
         team_squad_form = TeamSquadForm()
         team_form = TeamForm()
@@ -143,3 +149,16 @@ def teamcreate(request):
             'team_form': team_form,
         }
     )
+
+#def teamedit(request):
+#    if request.method == 'POST':
+#        form = TeamSquadEditForm(request.POST)
+#        if form.is_valid():
+#            opt = form.cleaned_data['listOfPlayers']
+#            a = Player.objects.get(playerID = opt.playerID)
+#            form = TeamSquadEditForm(request.POST, instance = a)
+#            form.save()
+#            return redirect('teamcreate')
+#    else:
+#        form = TeamSquadEditForm()
+#    return render(request, 'app/teamcreate.html', {'form': form})
