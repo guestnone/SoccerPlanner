@@ -26,6 +26,7 @@
                     <div class="col-md-offset-2 col-md-10">
                         <input type="hidden" name="next" value="/" />
                         <input type="submit" value="Log in" class="btn btn-default" />
+                        <a href="{% url 'accountcreate' %}" class="btn btn-default">Create account</a>
                     </div>
                 </div>
                 {% if form.errors %}
