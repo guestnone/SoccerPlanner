@@ -6,21 +6,15 @@ from django import forms
 from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
+from app.models import Player, TeamSquad, Team, Stage, Match, Event
 from django.utils.translation import ugettext_lazy as _
-from app.models import Event
-from app.models import Stage,Match
 from django.views.generic.edit import UpdateView
 
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
-    username = forms.CharField(max_length=254,
-                               widget=forms.TextInput({
-                                   'class': 'form-control',
-                                   'placeholder': 'User name'}))
-    password = forms.CharField(label=_("Password"),
-                               widget=forms.PasswordInput({
-                                   'class': 'form-control',
-                                   'placeholder':'Password'}))
+    username = forms.CharField(max_length=254, widget=forms.TextInput({'class': 'form-control', 'placeholder': 'User name'}))
+    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput({'class': 'form-control', 'placeholder': 'Password'}))
+
 
 class SignUpForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional.')
@@ -30,6 +24,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', )
+
 
 class EventForm(ModelForm):
     class Meta:
@@ -62,9 +57,47 @@ class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
         return obj.name + " "+ obj.listOfMatches.team1.name + " " + obj.listOfMatches.team2.name
 
+
 class StageEditForm(ModelForm):
     listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label= None)
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
     class Meta:
         model = Stage
         fields = ('listOfStages','name','listOfMatches')
+
+        
+class TeamSquadForm(ModelForm):
+    name = forms.CharField(max_length=20, required=True, help_text='Required.')
+    playerID = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player ", required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = TeamSquad
+        fields = ('playerID', 'name', )
+
+
+class TeamForm(ModelForm):
+    name = forms.CharField(max_length=20, required=True, help_text='Required.')
+    country = forms.CharField(max_length=20, required=True, help_text='Required.')
+    squad = forms.ModelChoiceField(queryset=TeamSquad.objects.all(), required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = Team
+        fields = ('name', 'country', 'squad', )
+
+
+class TeamSquadEditForm(ModelForm):
+    listOfSquads = forms.ModelChoiceField(queryset=TeamSquad.objects.all(), label="Squad ", required=True, empty_label="(Nothing)")
+    playerID = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player ", required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = TeamSquad
+        fields = ('listOfSquads', 'name', 'playerID', )
+
+
+class TeamEditForm(ModelForm):
+    listOfTeams = forms.ModelChoiceField(queryset=Team.objects.all(), label="Team ", required=True, empty_label="(Nothing)")
+    squad = forms.ModelChoiceField(queryset=TeamSquad.objects.all(), required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = Team
+        fields = ('listOfTeams', 'name', 'country', 'squad', )
