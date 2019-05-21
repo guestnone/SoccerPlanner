@@ -8,7 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from app.models import Stage,Match
-
+from django.views.generic.edit import UpdateView
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -38,4 +38,14 @@ class StageForm(ModelForm):
         model = Stage
         listOfMatches = [Match]
         fields = ('name','listOfMatches')
-    
+
+class MyModelChoiceField(forms.ModelChoiceField):
+    def label_from_instance(self, obj):
+        return obj.name + " "+ obj.listOfMatches.team1.name + " " + obj.listOfMatches.team2.name
+
+class StageEditForm(ModelForm):
+    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label= None)
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+    class Meta:
+        model = Stage
+        fields = ('listOfStages','name','listOfMatches')

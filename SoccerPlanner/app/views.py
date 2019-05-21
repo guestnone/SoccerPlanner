@@ -5,13 +5,14 @@ Definition of views.
 from datetime import datetime
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from app import models
-
-from app.forms import SignUpForm, StageForm
-
+from app.models import Stage
+from django.shortcuts import get_object_or_404
+from app.forms import SignUpForm, StageForm, StageEditForm
+from django.contrib import messages
+from django import forms
 def home(request):
     """Renders the home page."""
     assert isinstance(request, HttpRequest)
@@ -116,7 +117,21 @@ def stagecreate(request):
         else:
             form = StageForm()
         return render(request, 'app/stagecreate.html', {'form': form})
-    
+
+
+def stageedit(request):
+        if request.method == 'POST':
+            form = StageEditForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageEditForm(request.POST, instance = a)
+                form.save()
+                return redirect('stageeditsuccessful')
+        else:
+            form = StageEditForm()
+        return render(request, 'app/stageedit.html', {'form': form})
+        
 def accountcreatesuccessful(request):
     """Renders the successful account creation page."""
     assert isinstance(request, HttpRequest)
@@ -129,5 +144,11 @@ def stagecreatesuccessful(request):
     return render(
         request,
         'app/stagecreatesuccessful.html'
+    )
+def stageeditsuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stageeditsuccessful.html'
     )
 

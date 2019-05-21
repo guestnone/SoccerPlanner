@@ -75,5 +75,5 @@ class Stage(models.Model):
     name = models.CharField(max_length=80)
     listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
     def __str__(self):
-        return self.name
+        return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
 
