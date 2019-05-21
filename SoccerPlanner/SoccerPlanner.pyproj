@@ -31,9 +31,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="app\admin.py" />
     <Compile Include="app\forms.py" />
     <Compile Include="app\models.py" />
     <Compile Include="app\tests.py" />
+    <Compile Include="app\utils.py" />
     <Compile Include="app\views.py" />
     <Compile Include="app\__init__.py" />
     <Compile Include="app\migrations\__init__.py" />
@@ -61,6 +63,7 @@
     <Content Include="app\templates\app\accountcreatesuccessful.html" />
     <Content Include="app\templates\app\calendar.html" />
     <Content Include="app\templates\app\account.html" />
+    <Content Include="app\templates\app\event.html" />
     <Content Include="app\templates\app\manage.html" />
     <Content Include="app\templates\app\matchcreate.html" />
     <Content Include="app\templates\app\matchedit.html" />
