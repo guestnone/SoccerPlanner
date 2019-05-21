@@ -5,7 +5,8 @@ Definition of views.
 from datetime import *
 from calendar import monthrange, calendar
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ValidationError
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
