@@ -280,3 +280,12 @@ def event(request, event_id=None):
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'app/event.html', {'form': form})
+def captcha(request):
+    if request.POST:
+        form= CaptchaForm(request.POST)
+        if form.is_valid():
+            human = True
+            return redirect("/")
+    else:
+        form = CaptchaForm()
+    return render(request,'app/captcha.html', {'form' : form})
