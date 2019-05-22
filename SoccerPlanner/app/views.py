@@ -165,7 +165,25 @@ def stageeditsuccessful(request):
         request,
         'app/stageeditsuccessful.html'
     )
-
+def stagedelete(request):
+    if request.method == 'POST':
+            form = StageDeleteForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageDeleteForm(request.POST, instance = a)
+                a.delete()
+                #form.delete()
+                return redirect('stagedeletesuccessful')
+    else:
+        form = StageDeleteForm()
+    return render(request, 'app/stagedelete.html', {'form': form})
+def stagedeletesuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stagedeletesuccessful.html'
+    )
 class calendarview(generic.ListView):
     model = Event
     template_name = 'app/calendar.html'

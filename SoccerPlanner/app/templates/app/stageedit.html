@@ -23,7 +23,10 @@
     {% endfor %}
     <button type="submit">Update</button>
 </form>
-
+<div class="clearfix">
+        <br>
+        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+    </div>
 {% else %}
 
 <h3>Your are not logged!</h3>

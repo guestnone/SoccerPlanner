@@ -70,3 +70,9 @@ class StageEditForm(ModelForm):
 
 class CaptchaForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaWidget())
+
+class StageDeleteForm(ModelForm):
+    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = None)
+    class Meta:
+        model = Stage
+        fields = ('listOfStages',)

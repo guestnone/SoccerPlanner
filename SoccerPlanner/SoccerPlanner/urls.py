@@ -40,6 +40,9 @@ urlpatterns = [
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
     path('stageedit/',views.stageedit, name = 'stageedit'),
     path('stageeditsuccessful/',views.stageeditsuccessful, name='stageeditsuccessful'),
+    path('stagedelete',views.stagedelete, name = 'stagedelete'),
+    path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
     path('captcha', views.captcha,name='captcha')
+
     #re_path(r'^captcha', include('captcha.urls'))
 ]
