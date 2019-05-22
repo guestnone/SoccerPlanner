@@ -5,8 +5,26 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+<br>
 
-<p>WIP.</p>
+<form method="post">
+    <h4>Create your tournament here</h4>
+    <hr />
+    {% csrf_token %}
+    {% for field in tournament_form %}
+    <p>
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit">Create</button>
+</form>
 
 {% else %}
 

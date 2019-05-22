@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from app.models import Player, TeamSquad, Team, Stage, Match, Event
+from app.models import Player, TeamSquad, Team, Stage, Match, Event, Tournament
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 
@@ -101,3 +101,23 @@ class TeamEditForm(ModelForm):
     class Meta:
         model = Team
         fields = ('listOfTeams', 'name', 'country', 'squad', )
+
+
+class TournamentForm(ModelForm):
+    #stage = forms.ModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = "(Nothing)")
+    #winner = forms.ModelChoiceField(queryset = Tournament.objects.all(), label = "Tournament ", required = True, empty_label = "(Nothing)")
+    #stateChoice = forms.CharField(max_length = 2, required=True, help_text='Required.')
+
+    class Meta:
+        model = Tournament
+        widgets = {
+          'startingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+          'endingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+        }
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TournamentForm, self).__init__(*args, **kwargs)
+        # input_formats parses HTML5 datetime-local input to datetime field
+        self.fields['startingDate'].input_formats = ('%Y-%m-%dT%H:%M',)
+        self.fields['endingDate'].input_formats = ('%Y-%m-%dT%H:%M',)

@@ -195,6 +195,42 @@ def teamcreate(request):
             'team_edit_form': team_edit_form,
         }
     )
+
+
+def tournamentcreate(request, tournamentcreate_id=None):
+    #if request.method == "POST":
+    #    tournament_form = TournamentForm(request.POST)
+    #    if tournament_form.is_valid():
+    #        tournament_form.save()
+    #        return redirect('tournamentcreate')
+    #else:
+    #    tournament_form = TournamentForm()
+    #return render(
+    #    request,
+    #    'app/tournamentcreate.html',
+    #    {
+    #        'title': 'Tournament Creator',
+    #        'tournament_form': tournament_form,
+    #    }
+    #)
+    instance = Tournament()
+    if tournamentcreate_id:
+        instance = get_object_or_404(Tournament, pk=tournamentcreate_id)
+    else:
+        instance = Tournament()
+
+    tournament_form = TournamentForm(request.POST or None, instance=instance)
+    if request.POST and tournament_form.is_valid():
+        tournament_form.save()
+        return HttpResponseRedirect(reverse('tournamentcreate'))
+    return render(
+        request,
+        'app/tournamentcreate.html',
+        {
+            'title': 'Tournament Creator',
+            'tournament_form': tournament_form,
+        }
+    )
   
   
 def stagecreatesuccessful(request):
