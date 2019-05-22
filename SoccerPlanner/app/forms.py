@@ -8,7 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from .models import *
-#from captcha.fields import CaptchaField
+
 from django.views.generic.edit import UpdateView
 
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
