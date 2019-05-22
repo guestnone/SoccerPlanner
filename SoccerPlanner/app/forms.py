@@ -8,10 +8,11 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from .models import *
-
-
+#from captcha.fields import CaptchaField
 from django.views.generic.edit import UpdateView
 
+from snowpenguin.django.recaptcha2.fields import ReCaptchaField
+from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254,
@@ -48,13 +49,13 @@ class EventForm(ModelForm):
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         
-    class StageForm(ModelForm):
-        name = forms.CharField(max_length = 20, required= False, help_text='Required')
-        listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
-        class Meta:
-            model = Stage
-            listOfMatches = [Match]
-            fields = ('name','listOfMatches')
+class StageForm(ModelForm):
+    name = forms.CharField(max_length = 20, required= False, help_text='Required')
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+    class Meta:
+        model = Stage
+        listOfMatches = [Match]
+        fields = ('name','listOfMatches')
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -66,3 +67,6 @@ class StageEditForm(ModelForm):
     class Meta:
         model = Stage
         fields = ('listOfStages','name','listOfMatches')
+
+class CaptchaForm(forms.Form):
+    captcha = ReCaptchaField(widget=ReCaptchaWidget())

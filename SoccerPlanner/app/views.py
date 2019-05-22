@@ -4,13 +4,12 @@ Definition of views.
 
 from datetime import *
 from calendar import monthrange, calendar
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from app.forms import *
 from .models import *
-from app.forms import *
 from django.contrib import messages
 from django import forms
 from django.contrib import messages
@@ -98,6 +97,15 @@ def account(request):
 #                'title':'Calendar',
 #            }
 #        )
+def captcha(request):
+    if request.POST:
+        form= CaptchaForm(request.POST)
+        if form.is_valid():
+            human = True
+            return redirect("/")
+    else:
+        form = CaptchaForm()
+    return render(request,'app/captcha.html', {'form' : form})
 
 def accountcreate(request):
     """ View for creating user accounts """
