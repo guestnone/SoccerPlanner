@@ -5,20 +5,26 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+<br>
 
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <a href="{% url 'stagecreate' %}" class="btn btn-default">Create stage</a>
+<div class="row">
+    <div class="col-sm-6">
+        <h4>Manage your stages here</h4>
+        <hr />
+        <div class="clearfix">
+            <a href="{% url 'stagecreate' %}" class="btn btn-info right"> Create stage </a>
+        </div>
+        <br>
+        <div class="clearfix">
+            <a href="{% url 'stageedit' %}" class="btn btn-info right"> Edit stage </a>
+        </div>
+        <br>
+        <div class="clearfix">
+                <a href="{% url 'stagedelete' %}" class="btn btn-info right"> Delete stage </a>
+            </div>
+
     </div>
 </div>
-
-<div class="form-group">
-    <div class="col-md-offset-2 col-md-10">
-        <a href="{% url 'stageedit' %}" class="btn btn-default">Edit stage</a>
-    </div>
-</div>
-
-
 
 
 {% else %}

@@ -1,0 +1,20 @@
+{% extends "app/layout.html" %}
+
+{% block content %}
+{% load recaptcha2 %}
+  
+<html>
+  <h2>Prove that you are not robot.</h2>
+  <head>
+      {% recaptcha_init %}
+  </head>
+  <body>
+    <form action="?" method="POST">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="Submit">
+    </form>
+  </body>
+</html>
+
+{% endblock %}
