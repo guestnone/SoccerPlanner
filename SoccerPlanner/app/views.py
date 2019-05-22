@@ -5,7 +5,8 @@ Definition of views.
 from datetime import *
 from calendar import monthrange, calendar
 from django.shortcuts import render, redirect, get_object_or_404, render_to_response
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from app.forms import *
@@ -25,10 +26,11 @@ def home(request):
         request,
         'app/index.html',
         {
-            'title':'Home Page',
-            'year':datetime.now().year,
+            'title': 'Home Page',
+            'year': datetime.now().year,
         }
     )
+
 
 def contact(request):
     """Renders the contact page."""
@@ -37,11 +39,12 @@ def contact(request):
         request,
         'app/contact.html',
         {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year':datetime.now().year,
+            'title': 'Contact',
+            'message': 'Your contact page.',
+            'year': datetime.now().year,
         }
     )
+
 
 def about(request):
     """Renders the about page."""
@@ -50,11 +53,12 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
-            'year':datetime.now().year,
+            'title': 'About',
+            'message': 'Your application description page.',
+            'year': datetime.now().year,
         }
     )
+
 
 def manage(request):
     """ All-encompassing view for management stuff """
@@ -63,9 +67,10 @@ def manage(request):
         request,
         'app/manage.html',
         {
-            'title':'Dashboard',
+            'title': 'Dashboard',
         }
     )
+
 
 def account(request):
     """ View for account management """
@@ -74,7 +79,7 @@ def account(request):
         request,
         'app/account.html',
         {
-            'title':'Account',
+            'title': 'Account',
         }
     )
 
@@ -97,15 +102,27 @@ def account(request):
 #                'title':'Calendar',
 #            }
 #        )
-def captcha(request):
-    if request.POST:
-        form= CaptchaForm(request.POST)
-        if form.is_valid():
-            human = True
-            return redirect("/")
+
+def calendar(request):
+    """ View for displaying calendar """
+    assert isinstance(request, HttpRequest)
+    if request.user.is_authenticated:
+        return render(
+            request,
+            'app/calendar.html',
+            {
+                'title': 'Calendar (editable)',
+            }
+        )
     else:
-        form = CaptchaForm()
-    return render(request,'app/captcha.html', {'form' : form})
+        return render(
+            request,
+            'app/calendar.html',
+            {
+                'title': 'Calendar',
+            }
+        )
+
 
 def accountcreate(request):
     """ View for creating user accounts """
@@ -145,7 +162,8 @@ def stageedit(request):
         else:
             form = StageEditForm()
         return render(request, 'app/stageedit.html', {'form': form})
-        
+
+      
 def accountcreatesuccessful(request):
     """Renders the successful account creation page."""
     assert isinstance(request, HttpRequest)
@@ -153,12 +171,60 @@ def accountcreatesuccessful(request):
         request,
         'app/accountcreatesuccessful.html'
     )
+
+
+"""View for creating teams"""
+
+
+def teamcreate(request):
+    if request.method == 'POST':
+        team_squad_form = TeamSquadForm(request.POST)
+        team_form = TeamForm(request.POST)
+        team_squad_edit_form = TeamSquadEditForm(request.POST)
+        team_edit_form = TeamEditForm(request.POST)
+        if team_squad_form.is_valid():
+            if team_squad_edit_form.is_valid():
+                opt = team_squad_edit_form.cleaned_data['listOfSquads']
+                a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+                team_squad_edit_form = TeamSquadEditForm(request.POST, instance=a)
+                team_squad_edit_form.save()
+                return redirect('teamcreate')
+            team_squad_form.save()
+        elif team_form.is_valid():
+            if team_edit_form.is_valid():
+                opt = team_edit_form.cleaned_data['listOfTeams']
+                a = Team.objects.get(name=opt.name, country=opt.country, squad=opt.squad)
+                team_edit_form = TeamEditForm(request.POST, instance=a)
+                team_edit_form.save()
+                return redirect('teamcreate')
+            team_form.save()
+        return redirect('teamcreate')
+    else:
+        team_squad_form = TeamSquadForm()
+        team_form = TeamForm()
+        team_squad_edit_form = TeamSquadEditForm()
+        team_edit_form = TeamEditForm()
+
+    return render(
+        request,
+        'app/teamcreate.html',
+        {
+            'title': 'Team Creator',
+            'team_squad_form': team_squad_form,
+            'team_form': team_form,
+            'team_squad_edit_form': team_squad_edit_form,
+            'team_edit_form': team_edit_form,
+        }
+    )
+  
+  
 def stagecreatesuccessful(request):
     assert isinstance(request,HttpRequest)
     return render(
         request,
         'app/stagecreatesuccessful.html'
     )
+
 def stageeditsuccessful(request):
     assert isinstance(request,HttpRequest)
     return render(
@@ -234,3 +300,12 @@ def event(request, event_id=None):
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'app/event.html', {'form': form})
+def captcha(request):
+    if request.POST:
+        form= CaptchaForm(request.POST)
+        if form.is_valid():
+            human = True
+            return redirect("/")
+    else:
+        form = CaptchaForm()
+    return render(request,'app/captcha.html', {'form' : form})

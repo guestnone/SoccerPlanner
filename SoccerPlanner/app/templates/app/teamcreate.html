@@ -5,8 +5,95 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+<br>
 
-<p>WIP.</p>
+<div class="row">
+    <div class="col-sm-6">
+        <form method="post">
+            <h4>Create squad of your team here</h4>
+            <hr />
+            {% csrf_token %}
+            {% for field in team_squad_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Add</button>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <form method="post">
+            <h4>Edit squad of your team here</h4>
+            <hr />
+            {% csrf_token %}
+            {% for field in team_squad_edit_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Edit</button>
+        </form>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-6">
+        <form method="post">
+            <h4>Create your team here</h4>
+            <hr />
+            {% csrf_token %}
+            {% for field in team_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Create</button>
+        </form>
+    </div>
+    <div class="col-sm-6">
+        <form method="post">
+            <h4>Edit your team here</h4>
+            <hr />
+            {% csrf_token %}
+            {% for field in team_edit_form %}
+            <p>
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+                <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Edit</button>
+        </form>
+    </div>
+</div>
 
 {% else %}
 
