@@ -34,6 +34,7 @@ urlpatterns = [
     path('account/', views.account, name='account'),
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
+    path('teamcreate/', views.teamcreate, name='teamcreate'),
     path('event/new/$', views.event, name='event_new'),
 	path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
     path('stagecreate/', views.stagecreate, name='stagecreate'),
@@ -43,6 +44,6 @@ urlpatterns = [
     path('stagedelete',views.stagedelete, name = 'stagedelete'),
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
     path('captcha', views.captcha,name='captcha')
-
     #re_path(r'^captcha', include('captcha.urls'))
+
 ]
