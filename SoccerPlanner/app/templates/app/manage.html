@@ -5,14 +5,50 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+<br>
 
-<p>WIP.</p>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><br /><br />Manage your matches here</h4>
+            <hr />
+            <div class="clearfix">
+                <a href="{% url 'matchcreate' %}" class="btn btn-info right"> Create match </a>
+            </div>
+            <br>
+            <div class="clearfix">
+                <a href="{% url 'matchedit' %}" class="btn btn-info right"> Edit match </a>
+            </div>
+            <br>
+            <div class="clearfix">
+                <a href="{% url 'matchdelete' %}" class="btn btn-info right"> Delete match </a>
+            </div>
 
-{% else %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <h4><br /><br />Manage your players here</h4>
+            <hr />
+            <div class="clearfix">
+                <a href="{% url 'playercreate' %}" class="btn btn-info right"> Create player </a>
+            </div>
+            <br>
+            <div class="clearfix">
+                <a href="{% url 'playeredit' %}" class="btn btn-info right"> Edit player </a>
+            </div>
+            <br>
+            <div class="clearfix">
+                <a href="{% url 'playerdelete' %}" class="btn btn-info right"> Delete player </a>
+            </div>
 
-<h3>Your are not logged!</h3>
-<li><a href="{% url 'login' %}">Log In</a></li>
+        </div>
+    </div>
 
-{% endif %}
+    {% else %}
 
-{% endblock %}
+    <h3>Your are not logged!</h3>
+    <li><a href="{% url 'login' %}">Log In</a></li>
+
+    {% endif %}
+
+    {% endblock %}

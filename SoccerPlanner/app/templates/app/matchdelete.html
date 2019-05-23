@@ -4,14 +4,12 @@
 
 {% if user.is_authenticated %}
 
-<h2>{{ title }}</h2>
-<br>
-<h4>Create your match here</h4>
-<hr />
+<h2>Which match do you want to delete?</h2>
+<h3>Choose below: </h3>
 
 <form method="post">
     {% csrf_token %}
-    {% for field in match_form %}
+    {% for field in matchdelete_form %}
     <p>
         {{ field.label_tag }}<br>
         {{ field }}
@@ -23,12 +21,13 @@
     {% endfor %}
     </p>
     {% endfor %}
-    <button type="submit">Create</button>
-    <div class="clearfix">
-        <br>
-        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
-    </div>
+    <p style="color:red;">Remember - there is no return after clicking delete!</p>
+    <button type="submit" style="color:red;">Delete</button>
 </form>
+<div class="clearfix">
+    <br>
+    <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+</div>
 <hr />
 {% else %}
 

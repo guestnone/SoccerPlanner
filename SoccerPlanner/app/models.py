@@ -7,16 +7,18 @@ import uuid
 from django.db import models
 
 from django.db.models import ForeignKey
-
+from django.urls import reverse
 
 class Player(models.Model):
     playerID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     name = models.CharField(max_length=20)
     secondName = models.CharField(max_length=20)
     role = models.CharField(max_length=20)
-    birthDate = models.DateTimeField('Birth Date')
-    height = models.IntegerField(default=0)
+    birthDate = models.DateField(default='2019-01-01')
+    height = models.IntegerField(default=180)
     numberOfGoals = models.IntegerField(default=0)
+    def __str__(self):
+        return self.name + " " + self.secondName
 
 
 class ShootersMatch(models.Model):
@@ -29,22 +31,30 @@ class ShooterRank(models.Model):
 
 
 class TeamSquad(models.Model):
+    name = models.CharField(max_length=20, default="")
     playerID = models.ForeignKey(Player, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 
 class Team(models.Model):
     name = models.CharField(max_length=20)
     country = models.CharField(max_length=20)
     squad = ForeignKey(TeamSquad, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name
 
 
 class Match(models.Model):
     MatchID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
     team1 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team1')
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team2')
-    points = models.IntegerField(default=0)
-    points2 = models.IntegerField(default=0)
+    points = models.IntegerField(default=0,)
+    points2 = models.IntegerField(default=0,)
+    date = models.DateField(default='2019-01-01')
     shootersPerMatch = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.team1.name +" "+ self.team2.name
 
 
 class Tournament(models.Model):
@@ -69,5 +79,19 @@ class Tournament(models.Model):
 
 class Stage(models.Model):
     name = models.CharField(max_length=80)
+    listOfMatches = models.ManyToManyField(Match)#, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
+
+
+class Players(models.Model):
+    listOfPlayers = models.ForeignKey(Player, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name +" "+ self.secondName
+
+class Matches(models.Model):
     listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
+     
+    def __str__(self):
+        return self.team1.name +" "+ self.team2.name
 

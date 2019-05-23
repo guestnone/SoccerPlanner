@@ -9,7 +9,7 @@ from django.http import HttpRequest, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 
-from app.forms import SignUpForm
+from app.forms import *
 
 def home(request):
     """Renders the home page."""
@@ -114,3 +114,96 @@ def accountcreatesuccessful(request):
         'app/accountcreatesuccessful.html'
     )
 
+
+""" NitroBolon """
+def matchcreate(request):
+    """View for creating matches"""
+    if request.method == 'POST':
+        match_form = MatchCreateForm(request.POST)
+        if match_form.is_valid():
+            match_form.save()
+            return redirect('manage')
+    else:
+        match_form = MatchCreateForm()
+
+    return render(
+        request,
+        'app/matchcreate.html',
+        {
+            'title': 'Match Creator',
+            'match_form': match_form,
+        }
+    )
+
+def playercreate(request):
+    """View for creating players"""
+    if request.method == 'POST':
+        player_form = PlayerCreateForm(request.POST)
+        if player_form.is_valid():
+            player_form.save()
+            return redirect('manage')
+    else:
+        player_form = PlayerCreateForm()
+
+    return render(
+        request,
+        'app/playercreate.html',
+        {
+            'title': 'Player Creator',
+            'player_form': player_form,
+        }
+    )
+
+def matchedit(request):
+        """View for editing matches"""
+        if request.method == 'POST':
+            matchedit_form = MatchEditForm(request.POST)
+            if matchedit_form.is_valid():
+                #opt = matchedit_form.cleaned_data['listOfMatches']
+                a=Match.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                matchedit_form = MatchEditForm(request.POST, instance = a)
+                matchedit_form.save()
+                return redirect('manage')
+        else:
+            matchedit_form = MatchEditForm()
+            return render(request, 'app/matchedit.html', {'matchedit_form': matchedit_form})
+
+def playeredit(request):
+        """View for editing players"""
+        if request.method == 'POST':
+            playeredit_form = PlayerEditForm(request.POST)
+            if playeredit_form.is_valid():
+                opt = playeredit_form.cleaned_data['listOfPlayers']
+                a=Player.objects.get(name = opt.name,secondName = opt.secondName)
+                playeredit_form = PlayerEditForm(request.POST, instance = a)
+                a.save()
+                return redirect('manage')
+        else:
+            playeredit_form = PlayerEditForm()
+            return render(request, 'app/playeredit.html', {'playeredit_form': playeredit_form})
+
+def matchdelete(request):
+    if request.method == 'POST':
+            matchdelete_form = MatchDeleteForm(request.POST)
+            if matchdelete_form.is_valid():
+                opt = matchdelete_form.cleaned_data['listOfMatches']
+                a=Match.objects.get(team1 = opt.team1,team2 = opt.team2)
+                matchdelete_form = MatchDeleteForm(request.POST, instance = a)
+                a.delete()
+                return redirect('manage')
+    else:
+        matchdelete_form = MatchDeleteForm()
+    return render(request, 'app/matchdelete.html', {'matchdelete_form': matchdelete_form})
+
+def playerdelete(request):
+    if request.method == 'POST':
+            playerdelete_form = PlayerDeleteForm(request.POST)
+            if playerdelete_form.is_valid():
+                opt = playerdelete_form.cleaned_data['listOfPlayers']
+                a=Player.objects.get(name = opt.name,secondName = opt.secondName)
+                playerdelete_form = PlayerDeleteForm(request.POST, instance = a)
+                a.delete()
+                return redirect('manage')
+    else:
+        playerdelete_form = PlayerDeleteForm()
+    return render(request, 'app/playerdelete.html', {'playerdelete_form': playerdelete_form})
