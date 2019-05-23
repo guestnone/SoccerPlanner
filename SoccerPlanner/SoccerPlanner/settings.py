@@ -25,7 +25,7 @@ SECRET_KEY = '1e6a831c-c3ab-4f75-94c5-839acc52ea10'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'soccerpb.azurewebsites.net']
+ALLOWED_HOSTS = ['localhost', 'soccerpb.azurewebsites.net', '127.0.0.1']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'snowpenguin.django.recaptcha2',
 ]
 
 # Middleware framework
@@ -111,3 +112,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
 STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+
+RECAPTCHA_PUBLIC_KEY = '6LfFw6QUAAAAAHuO4_qIRgEjzRCExN-MsWi9rVEh'
+RECAPTCHA_PRIVATE_KEY = '6LfFw6QUAAAAANZIm5WvKofv6bTi-dvxh1bZktWG'

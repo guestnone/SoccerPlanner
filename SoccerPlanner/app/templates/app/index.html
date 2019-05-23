@@ -2,6 +2,15 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
+<div class="jumbotron">
+    <h2>Welcome, {{user.username}}</h2>
+    <p class="lead">Our website was created to make soccer fans lives easier. You want to organize championship? You want to join it?
+    Or simply check the results of the games? Join us now!</p>
+</div>
+
+{% else %}
 <div class="jumbotron">
     <h1>SoccerPlanner</h1>
     <p class="lead">Our website was created to make soccer fans lives easier. You want to organize championship? You want to join it?
@@ -35,5 +44,5 @@
     </div> 
     -->
 </div>
-
+{% endif %}
 {% endblock %}
