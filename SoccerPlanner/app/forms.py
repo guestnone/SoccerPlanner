@@ -9,9 +9,9 @@ from django.contrib.auth.models import User
 from app.models import Player, TeamSquad, Team, Stage, Match, Event
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
-
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
 from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
+
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254, widget=forms.TextInput({'class': 'form-control', 'placeholder': 'User name'}))
@@ -43,6 +43,7 @@ class EventForm(ModelForm):
         # input_formats parses HTML5 datetime-local input to datetime field
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
+
 class StageForm(ModelForm):
     name = forms.CharField(max_length = 20,required = False)
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(),required = False, label = "Match ",empty_label = None)
@@ -64,15 +65,6 @@ class StageEditForm(ModelForm):
         model = Stage
         fields = ('listOfStages','name','listOfMatches')
 
-class CaptchaForm(forms.Form):
-    captcha = ReCaptchaField(widget=ReCaptchaWidget())
-
-class StageDeleteForm(ModelForm):
-    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = None)
-    class Meta:
-        model = Stage
-        fields = ('listOfStages',)
-        
 class TeamSquadForm(ModelForm):
     name = forms.CharField(max_length=20, required=True, help_text='Required.')
     playerID = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player ", required=True, empty_label="(Nothing)")
@@ -108,4 +100,15 @@ class TeamEditForm(ModelForm):
     class Meta:
         model = Team
         fields = ('listOfTeams', 'name', 'country', 'squad', )
+
+     
+class CaptchaForm(forms.Form):
+    captcha = ReCaptchaField(widget=ReCaptchaWidget())
+
+class StageDeleteForm(ModelForm):
+    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = None)
+    class Meta:
+        model = Stage
+        fields = ('listOfStages',)
+        
 

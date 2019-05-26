@@ -36,12 +36,11 @@ urlpatterns = [
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('teamcreate/', views.teamcreate, name='teamcreate'),
     path('event/new/$', views.event, name='event_new'),
-	path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
-    path('stagecreate', views.stagecreate, name='stagecreate'),
+    path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
+    path('stagecreate/', views.stagecreate, name='stagecreate'),
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
-    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful'),
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
-    path('captcha', views.captcha,name='captcha')
-    #re_path(r'^captcha', include('captcha.urls'))
+    path('captcha', views.captcha,name='captcha'),
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
 
 ]
