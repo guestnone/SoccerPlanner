@@ -64,7 +64,8 @@ class Stage(models.Model):
 
 
 class Tournament(models.Model):
-    stage = models.ForeignKey(Stage, on_delete=models.CASCADE)
+    name = models.CharField(max_length=80, default='')
+    stage = models.ForeignKey(Stage, on_delete=models.CASCADE, null=True)
     startingDate = models.DateTimeField(u'Starting date')
     endingDate = models.DateTimeField(u'Ending date')
     winner = models.ForeignKey(Team, on_delete=models.CASCADE)
@@ -81,6 +82,9 @@ class Tournament(models.Model):
         (CANCELLED, 'Cancelled'),
     )
     stateChoice = models.CharField(max_length=2, choices=STATE_CHOICES, default=BEFORE)
+
+    def __str__(self):
+        return self.name
 
 
 class Event(models.Model):

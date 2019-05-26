@@ -5,26 +5,24 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
-<br>
 
 <div class="row">
     <div class="col-sm-6">
-        <h4>Manage your stages here</h4>
         <hr />
         <div class="clearfix">
-            <a href="{% url 'stagecreate' %}" class="btn btn-info right"> Create stage </a>
+            <h4><a href="{% url 'teamcreate' %}" >Squad and Team manager</a></h4>
         </div>
-        <br>
+        <hr />
         <div class="clearfix">
-            <a href="{% url 'stageedit' %}" class="btn btn-info right"> Edit stage </a>
+            <h4><a href="{% url 'tournamentcreate' %}" >Tournament manager</a></h4>
         </div>
     </div>
     <div class="col-sm-6">
-        <h4>Manage your tournaments here</h4>
         <hr />
         <div class="clearfix">
-            <a href="{% url 'tournamentcreate' %}" class="btn btn-info right"> Create tournament </a>
+            <h4><a href="{% url 'stagecreate' %}" >Stage manager</a></h4>
         </div>
+        <hr />
     </div>
 </div>
 
