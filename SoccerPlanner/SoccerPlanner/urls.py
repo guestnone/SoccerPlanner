@@ -40,9 +40,9 @@ urlpatterns = [
     path('stagecreate/', views.stagecreate, name='stagecreate'),
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
     path('stageedit/',views.stageedit, name = 'stageedit'),
+    path('tournamentcreate', views.tournamentcreate, name='tournamentcreate'),
     path('stagedelete',views.stagedelete, name = 'stagedelete'),
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
-    path('captcha', views.captcha,name='captcha')
+    path('captcha', views.captcha,name='captcha'),
     path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
-
 ]

@@ -56,10 +56,18 @@ class Match(models.Model):
         return self.team1.name +" "+ self.team2.name
 
 
+class Stage(models.Model):
+    name = models.CharField(max_length=80)
+    listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
+    def __str__(self):
+        return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
+
+
 class Tournament(models.Model):
-    stage = models.IntegerField
-    startingDate = models.DateTimeField('Starting date')
-    endingDate = models.DateTimeField('Ending date')
+    name = models.CharField(max_length=80, default='')
+    stage = models.ForeignKey(Stage, on_delete=models.CASCADE, null=True)
+    startingDate = models.DateTimeField(u'Starting date')
+    endingDate = models.DateTimeField(u'Ending date')
     winner = models.ForeignKey(Team, on_delete=models.CASCADE)
 
     BEFORE = 'BF'
@@ -75,12 +83,8 @@ class Tournament(models.Model):
     )
     stateChoice = models.CharField(max_length=2, choices=STATE_CHOICES, default=BEFORE)
 
-
-class Stage(models.Model):
-    name = models.CharField(max_length=80)
-    listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
     def __str__(self):
-        return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
+        return self.name
 
 
 class Event(models.Model):

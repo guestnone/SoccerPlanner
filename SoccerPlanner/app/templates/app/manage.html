@@ -21,11 +21,19 @@
         <br>
         <div class="clearfix">
                 <a href="{% url 'stagedelete' %}" class="btn btn-info right"> Delete stage </a>
-            </div>
-
+        </div>  
+    </div>
+    <div class="col-sm-6">
+        <hr />
+        <div class="clearfix">
+            <h4><a href="{% url 'teamcreate' %}" >Squad and Team manager</a></h4>
+        </div>
+        <hr />
+        <div class="clearfix">
+            <h4><a href="{% url 'tournamentcreate' %}" >Tournament manager</a></h4>
+        </div>
     </div>
 </div>
-
 
 {% else %}
 
