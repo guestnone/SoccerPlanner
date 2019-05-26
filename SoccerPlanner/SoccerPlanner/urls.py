@@ -3,10 +3,11 @@ Definition of urls for SoccerPlanner.
 """
 
 from datetime import datetime
-from django.urls import path
+from django.urls import path, re_path, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
+
 
 
 urlpatterns = [
@@ -29,11 +30,10 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
     path('admin/', admin.site.urls),
     path('manage/', views.manage, name='manage'),
-    path('calendar/', views.calendar, name='calendar'),
+    path('calendar/', views.calendarview.as_view(), name='calendar'),
     path('account/', views.account, name='account'),
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('matchcreate/', views.matchcreate, name='matchcreate'),
     path('playercreate/', views.playercreate, name='playercreate'),
 
-]

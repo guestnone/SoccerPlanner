@@ -4,10 +4,29 @@
 
 {% if user.is_authenticated %}
 
-<h2>{{ title }}</h2>
+<h2>Which stage do you want to edit?</h2>
+<h3>Choose below: </h3>
 
-<p>WIP.</p>
-
+<form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+        <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit">Update</button>
+</form>
+<div class="clearfix">
+        <br>
+        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+    </div>
 {% else %}
 
 <h3>Your are not logged!</h3>

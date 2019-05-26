@@ -2,14 +2,21 @@
 Definition of views.
 """
 
-from datetime import datetime
-from django.shortcuts import render, redirect
-from django.http import HttpRequest, HttpResponse
-
+from datetime import *
+from calendar import monthrange, calendar
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
-
 from app.forms import *
+from .models import *
+from django.contrib import messages
+from django import forms
+from django.contrib import messages
+from django.views import generic
+from django.utils.safestring import mark_safe
+from .utils import Calendar
 
 def home(request):
     """Renders the home page."""
@@ -18,10 +25,11 @@ def home(request):
         request,
         'app/index.html',
         {
-            'title':'Home Page',
-            'year':datetime.now().year,
+            'title': 'Home Page',
+            'year': datetime.now().year,
         }
     )
+
 
 def contact(request):
     """Renders the contact page."""
@@ -30,11 +38,12 @@ def contact(request):
         request,
         'app/contact.html',
         {
-            'title':'Contact',
-            'message':'Your contact page.',
-            'year':datetime.now().year,
+            'title': 'Contact',
+            'message': 'Your contact page.',
+            'year': datetime.now().year,
         }
     )
+
 
 def about(request):
     """Renders the about page."""
@@ -43,11 +52,12 @@ def about(request):
         request,
         'app/about.html',
         {
-            'title':'About',
-            'message':'Your application description page.',
-            'year':datetime.now().year,
+            'title': 'About',
+            'message': 'Your application description page.',
+            'year': datetime.now().year,
         }
     )
+
 
 def manage(request):
     """ All-encompassing view for management stuff """
@@ -56,9 +66,10 @@ def manage(request):
         request,
         'app/manage.html',
         {
-            'title':'Dashboard',
+            'title': 'Dashboard',
         }
     )
+
 
 def account(request):
     """ View for account management """
@@ -67,9 +78,29 @@ def account(request):
         request,
         'app/account.html',
         {
-            'title':'Account',
+            'title': 'Account',
         }
     )
+
+#def calendar(request):
+#    """ View for displaying calendar """
+#    assert isinstance(request, HttpRequest)
+#    if request.user.is_authenticated:
+#        return render(
+#            request,
+#            'app/calendar.html',
+#            {
+#               'title':'Calendar (editable)',
+#            }
+#        )
+#    else:
+#        return render(
+#            request,
+#            'app/calendar.html',
+#            {
+#                'title':'Calendar',
+#            }
+#        )
 
 def calendar(request):
     """ View for displaying calendar """
@@ -79,7 +110,7 @@ def calendar(request):
             request,
             'app/calendar.html',
             {
-                'title':'Calendar (editable)',
+                'title': 'Calendar (editable)',
             }
         )
     else:
@@ -87,9 +118,10 @@ def calendar(request):
             request,
             'app/calendar.html',
             {
-                'title':'Calendar',
+                'title': 'Calendar',
             }
         )
+
 
 def accountcreate(request):
     """ View for creating user accounts """
@@ -106,6 +138,31 @@ def accountcreate(request):
         form = SignUpForm()
     return render(request, 'app/accountcreate.html', {'form': form})
 
+def stagecreate(request):     
+        if request.method == 'POST':
+            form = StageForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('stagecreatesuccessful')
+        else:
+            form = StageForm()
+        return render(request, 'app/stagecreate.html', {'form': form})
+
+
+def stageedit(request):
+        if request.method == 'POST':
+            form = StageEditForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageEditForm(request.POST, instance = a)
+                form.save()
+                return redirect('stageeditsuccessful')
+        else:
+            form = StageEditForm()
+        return render(request, 'app/stageedit.html', {'form': form})
+
+      
 def accountcreatesuccessful(request):
     """Renders the successful account creation page."""
     assert isinstance(request, HttpRequest)
@@ -113,7 +170,6 @@ def accountcreatesuccessful(request):
         request,
         'app/accountcreatesuccessful.html'
     )
-
 
 def matchcreate(request):
     """View for creating matches"""
@@ -194,3 +250,123 @@ def playercreate(request):
         )
 
 
+def teamcreate(request):
+    if request.method == 'POST':
+        team_squad_form = TeamSquadForm(request.POST)
+        team_form = TeamForm(request.POST)
+        team_squad_edit_form = TeamSquadEditForm(request.POST)
+        team_edit_form = TeamEditForm(request.POST)
+        if team_squad_form.is_valid():
+            if team_squad_edit_form.is_valid():
+                opt = team_squad_edit_form.cleaned_data['listOfSquads']
+                a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+                team_squad_edit_form = TeamSquadEditForm(request.POST, instance=a)
+                team_squad_edit_form.save()
+                return redirect('teamcreate')
+            team_squad_form.save()
+        elif team_form.is_valid():
+            if team_edit_form.is_valid():
+                opt = team_edit_form.cleaned_data['listOfTeams']
+                a = Team.objects.get(name=opt.name, country=opt.country, squad=opt.squad)
+                team_edit_form = TeamEditForm(request.POST, instance=a)
+                team_edit_form.save()
+                return redirect('teamcreate')
+            team_form.save()
+        return redirect('teamcreate')
+    else:
+        team_squad_form = TeamSquadForm()
+        team_form = TeamForm()
+        team_squad_edit_form = TeamSquadEditForm()
+        team_edit_form = TeamEditForm()
+
+    return render(
+        request,
+        'app/teamcreate.html',
+        {
+            'title': 'Team Creator',
+            'team_squad_form': team_squad_form,
+            'team_form': team_form,
+            'team_squad_edit_form': team_squad_edit_form,
+            'team_edit_form': team_edit_form,
+        }
+    )
+  
+
+def stagedelete(request):
+    if request.method == 'POST':
+            form = StageDeleteForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageDeleteForm(request.POST, instance = a)
+                a.delete()
+                #form.delete()
+                return redirect('stagedeletesuccessful')
+    else:
+        form = StageDeleteForm()
+    return render(request, 'app/stagedelete.html', {'form': form})
+def stagedeletesuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stagedeletesuccessful.html'
+    )
+class calendarview(generic.ListView):
+    model = Event
+    template_name = 'app/calendar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        d = get_date(self.request.GET.get('month', None))
+
+        # Instantiate our calendar class with today's year and date
+        cal = Calendar(d.year, d.month, self.request)
+
+        # Call the formatmonth method, which returns our calendar as a table
+        html_cal = cal.formatmonth(withyear=True)
+        context['calendar'] = mark_safe(html_cal)
+
+        context['prev_month'] = prev_month(d)
+        context['next_month'] = next_month(d)
+        return context
+
+def get_date(req_day):
+    if req_day:
+        year, month = (int(x) for x in req_day.split('-'))
+        return date(year, month, day=1)
+    return datetime.today()
+
+def prev_month(d):
+    first = d.replace(day=1)
+    prev_month = first - timedelta(days=1)
+    month = 'month=' + str(prev_month.year) + '-' + str(prev_month.month)
+    return month
+
+def next_month(d):
+    days_in_month = monthrange(d.year, d.month)[1]
+    last = d.replace(day=days_in_month)
+    next_month = last + timedelta(days=1)
+    month = 'month=' + str(next_month.year) + '-' + str(next_month.month)
+    return month
+
+def event(request, event_id=None):
+    instance = Event()
+    if event_id:
+        instance = get_object_or_404(Event, pk=event_id)
+    else:
+        instance = Event()
+
+    form = EventForm(request.POST or None, instance=instance)
+    if request.POST and form.is_valid():
+        form.save()
+        return HttpResponseRedirect(reverse('calendar'))
+    return render(request, 'app/event.html', {'form': form})
+def captcha(request):
+    if request.POST:
+        form= CaptchaForm(request.POST)
+        if form.is_valid():
+            human = True
+            return redirect("/")
+    else:
+        form = CaptchaForm()
+    return render(request,'app/captcha.html', {'form' : form})
