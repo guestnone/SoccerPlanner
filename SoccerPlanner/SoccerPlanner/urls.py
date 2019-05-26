@@ -35,19 +35,5 @@ urlpatterns = [
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('matchcreate/', views.matchcreate, name='matchcreate'),
-    path('matchedit/', views.matchedit, name='matchedit'),
-    path('matchdelete/', views.matchdelete, name='matchdelete'),
     path('playercreate/', views.playercreate, name='playercreate'),
-    path('playeredit/', views.playeredit, name='playeredit'),
-    path('playerdelete/', views.playerdelete, name='playerdelete')
-    path('teamcreate/', views.teamcreate, name='teamcreate'),
-    path('event/new/$', views.event, name='event_new'),
-	  path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
-    path('stagecreate/', views.stagecreate, name='stagecreate'),
-    path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
-    path('stageedit/',views.stageedit, name = 'stageedit'),
-    path('stagedelete',views.stagedelete, name = 'stagedelete'),
-    path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
-    path('captcha', views.captcha,name='captcha')
-    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
-]
+

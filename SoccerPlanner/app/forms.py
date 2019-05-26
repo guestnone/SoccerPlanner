@@ -7,7 +7,8 @@ from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 
-from app.models import Player, TeamSquad, Team, Stage, Match, Players, Matches
+from app.models import Player, TeamSquad, Team, Stage, Match, ShootersMatch
+
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
@@ -47,17 +48,17 @@ class PlayerCreateForm(ModelForm):
         model=Player
         fields=('name','secondName','role','birthDate','height',)
 
-class MatchEditForm(forms.Form):
+class MatchEditForm(ModelForm):
     listOfTeams = forms.ModelChoiceField(queryset=Match.objects.all(), label="Match", required=True, empty_label="(None)")
     date = forms.DateField(help_text='e.g. 2019-01-01 (YYYY-MM-DD)')
     points = forms.IntegerField(label="Goals scored by team 1", required=True, min_value=0)
     points2 = forms.IntegerField(label="Goals scored by team 2", required=True, min_value=0)
     class Meta:
         model=Match
-        fields=('listOfTeams', 'points', 'points2', 'date',)
+        fields=['listOfTeams', 'date', 'points', 'points2']
 
-class PlayerEditForm(forms.Form):
-    listOfPlayers = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player", required=True, empty_label="(None)")
+class PlayerEditForm(ModelForm):
+    listOfPlayers = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
     name = forms.CharField(max_length=20, required = True, label='Name')
     secondName = forms.CharField(max_length=20, required = True, label='Second name')
     role = forms.CharField(max_length=20, label='Role')
@@ -65,20 +66,26 @@ class PlayerEditForm(forms.Form):
     height = forms.IntegerField(label='Height (cm)', min_value=150)
     numberOfGoals = forms.IntegerField(label='Scored Goals', min_value=0)
     class Meta:
-        model=Player
-        fields=('listOfPlayers','name','secondName','role','birthDate','height','numberOfGoals')
+        model = Player
+        fields=['listOfPlayers', 'name', 'secondName', 'role', 'birthDate', 'height', 'numberOfGoals']
 
 class PlayerDeleteForm(ModelForm):
     listOfPlayers = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
     class Meta:
-        model = Players
+        model = Player
         fields = ('listOfPlayers',)
 
 class MatchDeleteForm(ModelForm):
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match", required = True, empty_label ="(None)")
     class Meta:
-        model = Matches
-        fields = ('listOfMatches',)
+
+class ShootersForm(ModelForm):
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match", required = True, empty_label ="(None)")
+    playerID = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
+    numberOfGoals = forms.IntegerField(label='Number of shot goals', min_value=1)
+    class Meta:
+        model = ShootersMatch
+        fields = ('listOfMatches','playerID','numberOfGoals')
 
 class EventForm(ModelForm):
     class Meta:

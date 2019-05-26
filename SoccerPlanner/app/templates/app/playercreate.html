@@ -24,11 +24,55 @@
     </p>
     {% endfor %}
     <button type="submit">Add</button>
-    <div class="clearfix">
-        <br>
-        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
-    </div>
 </form>
+<hr />
+
+
+<h2>Which player do you want to edit?</h2>
+<h3>Choose below: </h3>
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in playeredit_form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+    {% endfor %}
+    <button type="submit">Update</button>
+</form>
+<hr />
+
+<h2>Which player do you want to delete?</h2>
+<h3>Choose below: </h3>
+
+<form method="post">
+    {% csrf_token %}
+    {% for field in playerdelete_form %}
+    <p>
+        {{ field.label_tag }}<br>
+        {{ field }}
+        {% if field.help_text %}
+        <small style="color: grey">{{ field.help_text }}</small>
+        {% endif %}
+        {% for error in field.errors %}
+    <p style="color: red">{{ error }}</p>
+    {% endfor %}
+    </p>
+    {% endfor %}
+    <p style="color:red;">Remember - there is no return after clicking delete!</p>
+    <button type="submit" style="color:red;">Delete</button>
+</form>
+<div class="clearfix">
+    <br>
+    <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+</div>
 <hr />
 {% else %}
 
