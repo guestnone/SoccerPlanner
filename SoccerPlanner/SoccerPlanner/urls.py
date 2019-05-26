@@ -34,9 +34,6 @@ urlpatterns = [
     path('accountcreate/', views.accountcreate, name='accountcreate'),
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('matchcreate/', views.matchcreate, name='matchcreate'),
-    path('matchedit/', views.matchedit, name='matchedit'),
-    path('matchdelete/', views.matchdelete, name='matchdelete'),
     path('playercreate/', views.playercreate, name='playercreate'),
-    path('playeredit/', views.playeredit, name='playeredit'),
-    path('playerdelete/', views.playerdelete, name='playerdelete')
+
 ]

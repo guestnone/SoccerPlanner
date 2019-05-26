@@ -18,13 +18,12 @@ class Player(models.Model):
     height = models.IntegerField(default=180)
     numberOfGoals = models.IntegerField(default=0)
     def __str__(self):
-        return self.name + " " + self.secondName
+        return self.name + " " + self.secondName + " " + self.role
 
 
 class ShootersMatch(models.Model):
     playerID = models.ForeignKey(Player, on_delete=models.CASCADE)
     goals = models.IntegerField(default=0)
-
 
 class ShooterRank(models.Model):
     playerID = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE)
@@ -35,7 +34,6 @@ class TeamSquad(models.Model):
     playerID = models.ForeignKey(Player, on_delete=models.CASCADE)
     def __str__(self):
         return self.name
-
 
 class Team(models.Model):
     name = models.CharField(max_length=20)
@@ -83,15 +81,4 @@ class Stage(models.Model):
     def __str__(self):
         return self.name+ " "+self.listOfMatches.team1.name + " " + self.listOfMatches.team2.name
 
-
-class Players(models.Model):
-    listOfPlayers = models.ForeignKey(Player, on_delete=models.CASCADE)
-    def __str__(self):
-        return self.name +" "+ self.secondName
-
-class Matches(models.Model):
-    listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
-     
-    def __str__(self):
-        return self.team1.name +" "+ self.team2.name
 
