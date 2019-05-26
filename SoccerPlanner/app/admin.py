@@ -9,3 +9,4 @@ admin.site.register(Match)
 admin.site.register(ShootersMatch)
 admin.site.register(Stage)
 admin.site.register(Tournament)
+

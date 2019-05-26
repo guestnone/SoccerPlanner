@@ -83,26 +83,6 @@ def account(request):
         }
     )
 
-#def calendar(request):
-#    """ View for displaying calendar """
-#    assert isinstance(request, HttpRequest)
-#    if request.user.is_authenticated:
-#        return render(
-#            request,
-#            'app/calendar.html',
-#            {
-#               'title':'Calendar (editable)',
-#            }
-#        )
-#    else:
-#        return render(
-#            request,
-#            'app/calendar.html',
-#            {
-#                'title':'Calendar',
-#            }
-#        )
-
 def calendar(request):
     """ View for displaying calendar """
     assert isinstance(request, HttpRequest)
@@ -127,41 +107,56 @@ def calendar(request):
 def accountcreate(request):
     """ View for creating user accounts """
     if request.method == 'POST':
+        captchaForm= CaptchaForm(request.POST)
         form = SignUpForm(request.POST)
         if form.is_valid():
-            form.save()
-            username = form.cleaned_data.get('username')
-            raw_password = form.cleaned_data.get('password1')
-            user = authenticate(username=username, password=raw_password)
-            login(request, user)
-            return redirect('accountcreatesuccessful')
+            if captchaForm.is_valid():
+                human = True
+                form.save()
+                username = form.cleaned_data.get('username')
+                raw_password = form.cleaned_data.get('password1')
+                user = authenticate(username=username, password=raw_password)
+                login(request, user)
+                return redirect('accountcreatesuccessful')
     else:
         form = SignUpForm()
-    return render(request, 'app/accountcreate.html', {'form': form})
+        captchaForm = CaptchaForm()
+    return render(request, 'app/accountcreate.html', {'form': form, 'captchaForm': captchaForm})
 
-def stagecreate(request):     
-        if request.method == 'POST':
-            form = StageForm(request.POST)
-            if form.is_valid():
-                form.save()
-                return redirect('stagecreatesuccessful')
-        else:
-            form = StageForm()
-        return render(request, 'app/stagecreate.html', {'form': form})
-
-
-def stageedit(request):
-        if request.method == 'POST':
-            form = StageEditForm(request.POST)
-            if form.is_valid():
-                opt = form.cleaned_data['listOfStages']
-                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
-                form = StageEditForm(request.POST, instance = a)
-                form.save()
+def stagecreate(request):
+    if request.method == 'POST':
+        createStage = StageForm(request.POST)
+        editStage = StageEditForm(request.POST)
+        deleteStage = StageDeleteForm(request.POST)
+        if createStage.is_valid():
+            if editStage.is_valid():
+                opt = editStage.cleaned_data['listOfStages']
+                a = Stage.objects.get(name=opt.name, listOfMatches=opt.listOfMatches)
+                editStage = StageEditForm(request.POST, instance=a)
+                editStage.save()
                 return redirect('stageeditsuccessful')
-        else:
-            form = StageEditForm()
-        return render(request, 'app/stageedit.html', {'form': form})
+            elif deleteStage.is_valid():
+                opt = deleteStage.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageDeleteForm(request.POST, instance = a)
+                a.delete()
+                return redirect('stagedeletesuccessful')
+            createStage.save()
+            return redirect('stagecreatesuccessful')
+    else:
+        createStage = StageForm()
+        editStage = StageEditForm()
+        deleteStage = StageDeleteForm()
+    return render(
+        request,
+        'app/stagecreate.html',
+        {
+            'title': 'Stage Creator',
+            'createStage': createStage,
+            'editStage': editStage,
+            'deleteStage': deleteStage,
+        }
+    )
 
       
 def accountcreatesuccessful(request):
@@ -286,19 +281,7 @@ def stageeditsuccessful(request):
         request,
         'app/stageeditsuccessful.html'
     )
-def stagedelete(request):
-    if request.method == 'POST':
-            form = StageDeleteForm(request.POST)
-            if form.is_valid():
-                opt = form.cleaned_data['listOfStages']
-                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
-                form = StageDeleteForm(request.POST, instance = a)
-                a.delete()
-                #form.delete()
-                return redirect('stagedeletesuccessful')
-    else:
-        form = StageDeleteForm()
-    return render(request, 'app/stagedelete.html', {'form': form})
+
 def stagedeletesuccessful(request):
     assert isinstance(request,HttpRequest)
     return render(

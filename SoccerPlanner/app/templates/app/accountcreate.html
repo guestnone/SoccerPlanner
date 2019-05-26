@@ -1,7 +1,7 @@
 ﻿{% extends "app/layout.html" %}
 
 {% block content %}
-
+{% load recaptcha2 %}
 {% if user.is_authenticated %}
 
 <h3>Your are logged!</h3>
@@ -24,10 +24,20 @@
         {% endfor %}
     </p>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <h4>Prove that you are not robot.</h4>
+    <head>
+        {% recaptcha_init %}
+    </head>
+    <body>
+          <form action="?" method="POST">
+                  {% csrf_token %}
+                  {{ captchaForm }}
+                  <br>
+                  <input type="submit" value="Submit">
+          </form>
+    </body>
 </form>
 
-    
 {% endif %}
 
 {% endblock %}
