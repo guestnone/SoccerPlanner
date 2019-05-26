@@ -5,11 +5,13 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
+
 <link rel="stylesheet" type="text/css" href="../../static/app/content/own.css">
 <div class= "button2">
 <p><a class="button2" href="{% url 'stagecreate' %}">Stage manager</a></p>
 <p><a class="button2" href="{% url 'teamcreate' %}">Squad and Team manager</a></p>
 <p><a class="button2" href="{% url 'tournamentcreate' %}">Tournament manager</a></p>
+
 
 {% else %}
 

@@ -39,8 +39,8 @@ urlpatterns = [
     path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
     path('stagecreate/', views.stagecreate, name='stagecreate'),
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
+    path('tournamentcreate', views.tournamentcreate, name='tournamentcreate'),
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
     path('captcha', views.captcha,name='captcha'),
     path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
-
 ]

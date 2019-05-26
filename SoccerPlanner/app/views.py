@@ -177,6 +177,8 @@ def teamcreate(request):
         team_form = TeamForm(request.POST)
         team_squad_edit_form = TeamSquadEditForm(request.POST)
         team_edit_form = TeamEditForm(request.POST)
+        team_squad_delete_form = TeamSquadDeleteForm(request.POST)
+        team_delete_form = TeamDeleteForm(request.POST)
         if team_squad_form.is_valid():
             if team_squad_edit_form.is_valid():
                 opt = team_squad_edit_form.cleaned_data['listOfSquads']
@@ -185,6 +187,12 @@ def teamcreate(request):
                 team_squad_edit_form.save()
                 return redirect('teamcreate')
             team_squad_form.save()
+        elif team_squad_delete_form.is_valid():
+            opt = team_squad_delete_form.cleaned_data['listOfSquads']
+            a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+            team_squad_delete_form = TeamSquadDeleteForm(request.POST, instance=a)
+            a.delete()
+            return redirect('teamcreate')
         elif team_form.is_valid():
             if team_edit_form.is_valid():
                 opt = team_edit_form.cleaned_data['listOfTeams']
@@ -193,12 +201,20 @@ def teamcreate(request):
                 team_edit_form.save()
                 return redirect('teamcreate')
             team_form.save()
+        elif team_delete_form.is_valid():
+            opt = team_delete_form.cleaned_data['listOfTeams']
+            a = Team.objects.get(name=opt.name, country=opt.country, squad=opt.squad)
+            team_delete_form = TeamDeleteForm(request.POST, instance=a)
+            a.delete()
+            return redirect('teamcreate')
         return redirect('teamcreate')
     else:
         team_squad_form = TeamSquadForm()
         team_form = TeamForm()
         team_squad_edit_form = TeamSquadEditForm()
         team_edit_form = TeamEditForm()
+        team_squad_delete_form = TeamSquadDeleteForm()
+        team_delete_form = TeamDeleteForm()
 
     return render(
         request,
@@ -209,6 +225,45 @@ def teamcreate(request):
             'team_form': team_form,
             'team_squad_edit_form': team_squad_edit_form,
             'team_edit_form': team_edit_form,
+            'team_squad_delete_form': team_squad_delete_form,
+            'team_delete_form': team_delete_form,
+        }
+    )
+
+
+def tournamentcreate(request):
+    if request.method == 'POST':
+        tournament_form = TournamentForm(request.POST)
+        tournament_edit_form = TournamentEditForm(request.POST)
+        tournament_delete_form = TournamentDeleteForm(request.POST)
+        if tournament_form.is_valid():
+            if tournament_edit_form.is_valid():
+                opt = tournament_edit_form.cleaned_data['listOfTournaments']
+                a = Tournament.objects.get(name=opt.name, stage=opt.stage, startingDate=opt.startingDate, endingDate=opt.endingDate, winner=opt.winner, stateChoice=opt.stateChoice)
+                tournament_edit_form = TournamentEditForm(request.POST, instance=a)
+                tournament_edit_form.save()
+                return redirect('tournamentcreate')
+            tournament_form.save()
+            return redirect('tournamentcreate')
+        elif tournament_delete_form.is_valid():
+            opt = tournament_delete_form.cleaned_data['listOfTournaments']
+            a = Tournament.objects.get(name=opt.name, stage=opt.stage, startingDate=opt.startingDate, endingDate=opt.endingDate, winner=opt.winner, stateChoice=opt.stateChoice)
+            tournament_delete_form = TournamentDeleteForm(request.POST, instance=a)
+            a.delete()
+            return redirect('tournamentcreate')
+    else:
+        tournament_form = TournamentForm()
+        tournament_edit_form = TournamentEditForm()
+        tournament_delete_form = TournamentDeleteForm()
+
+    return render(
+        request,
+        'app/tournamentcreate.html',
+        {
+            'title': 'Tournament Manager',
+            'tournament_form': tournament_form,
+            'tournament_edit_form': tournament_edit_form,
+            'tournament_delete_form': tournament_delete_form,
         }
     )
   

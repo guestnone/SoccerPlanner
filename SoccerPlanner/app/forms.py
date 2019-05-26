@@ -6,7 +6,7 @@ from django import forms
 from django.forms import ModelForm, DateInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
-from app.models import Player, TeamSquad, Team, Stage, Match, Event
+from app.models import Player, TeamSquad, Team, Stage, Match, Event, Tournament
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
@@ -71,7 +71,7 @@ class TeamSquadForm(ModelForm):
 
     class Meta:
         model = TeamSquad
-        fields = ('playerID', 'name', )
+        fields = ('name', 'playerID', )
 
 
 class TeamForm(ModelForm):
@@ -101,9 +101,69 @@ class TeamEditForm(ModelForm):
         model = Team
         fields = ('listOfTeams', 'name', 'country', 'squad', )
 
-     
+class TeamSquadDeleteForm(ModelForm):
+    listOfSquads = forms.ModelChoiceField(queryset=TeamSquad.objects.all(), label="Squad ", required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = TeamSquad
+        fields = ('listOfSquads', )
+
+
+class TeamDeleteForm(ModelForm):
+    listOfTeams = forms.ModelChoiceField(queryset=Team.objects.all(), label="Team ", required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = Team
+        fields = ('listOfTeams', )
+
+
+class TournamentForm(ModelForm):
+
+    class Meta:
+        model = Tournament
+        widgets = {
+          'startingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+          'endingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+        }
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(TournamentForm, self).__init__(*args, **kwargs)
+        # input_formats parses HTML5 datetime-local input to datetime field
+        self.fields['startingDate'].input_formats = ('%Y-%m-%dT%H:%M',)
+        self.fields['endingDate'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+
+class TournamentEditForm(ModelForm):
+    listOfTournaments = forms.ModelChoiceField(queryset=Tournament.objects.all(), label="Tournament ", required=True, empty_label="(Nothing)")
+    stage = forms.ModelChoiceField(queryset = Stage.objects.all(), label = "Stage ")
+    winner = forms.ModelChoiceField(queryset = Team.objects.all(), label = "Team ")
+
+    class Meta:
+        model = Tournament
+        widgets = {
+          'startingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+          'endingDate': DateInput(attrs={'type': 'datetime-local'}, format='%Y-%m-%dT%H:%M'),
+        }
+        fields = ('listOfTournaments', 'name', 'stage', 'startingDate', 'endingDate', 'winner', 'stateChoice', )
+
+    def __init__(self, *args, **kwargs):
+        super(TournamentEditForm, self).__init__(*args, **kwargs)
+        # input_formats parses HTML5 datetime-local input to datetime field
+        self.fields['startingDate'].input_formats = ('%Y-%m-%dT%H:%M',)
+        self.fields['endingDate'].input_formats = ('%Y-%m-%dT%H:%M',)
+
+
+class TournamentDeleteForm(ModelForm):
+    listOfTournaments = forms.ModelChoiceField(queryset=Tournament.objects.all(), label="Tournament ", required=True, empty_label="(Nothing)")
+
+    class Meta:
+        model = Tournament
+        fields = ('listOfTournaments', )
+
 class CaptchaForm(forms.Form):
     captcha = ReCaptchaField(widget=ReCaptchaWidget())
+
 
 class StageDeleteForm(ModelForm):
     listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = None)
