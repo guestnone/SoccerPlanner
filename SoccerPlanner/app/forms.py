@@ -44,8 +44,8 @@ class EventForm(ModelForm):
         self.fields['start_time'].input_formats = ('%Y-%m-%dT%H:%M',)
         self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
 class StageForm(ModelForm):
-    name = forms.CharField(max_length = 20, required= False, help_text='Required')
-    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+    name = forms.CharField(max_length = 20,required = False)
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(),required = False, label = "Match ",empty_label = None)
     class Meta:
         model = Stage
         listOfMatches = [Match]
@@ -59,7 +59,7 @@ class MyModelChoiceField(forms.ModelChoiceField):
 
 class StageEditForm(ModelForm):
     listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label= None)
-    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match ")
+    listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(),required = True, label = "Match ",empty_label = None)
     class Meta:
         model = Stage
         fields = ('listOfStages','name','listOfMatches')
