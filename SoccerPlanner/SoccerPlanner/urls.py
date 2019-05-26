@@ -36,4 +36,13 @@ urlpatterns = [
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('matchcreate/', views.matchcreate, name='matchcreate'),
     path('playercreate/', views.playercreate, name='playercreate'),
+    path('teamcreate/', views.teamcreate, name='teamcreate'),
+    path('event/new/$', views.event, name='event_new'),
+    path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
+    path('stagecreate/', views.stagecreate, name='stagecreate'),
+    path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
+    path('tournamentcreate', views.tournamentcreate, name='tournamentcreate'),
+    path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
+    path('captcha', views.captcha,name='captcha'),
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
 

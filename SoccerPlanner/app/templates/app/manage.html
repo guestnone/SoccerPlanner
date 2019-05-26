@@ -5,44 +5,15 @@
 {% if user.is_authenticated %}
 
 <h2>{{ title }}</h2>
-<br>
-<div class="row">
-    <div class="col-sm-6">
-        <h4>Manage your stages here</h4>
-        <hr />
-        <div class="clearfix">
-            <a href="{% url 'stagecreate' %}" class="btn btn-info right"> Create stage </a>
-        </div>
-        <br>
-        <div class="clearfix">
-            <a href="{% url 'stageedit' %}" class="btn btn-info right"> Edit stage </a>
-        </div>
-        <br>
-        <div class="clearfix">
-                <a href="{% url 'stagedelete' %}" class="btn btn-info right"> Delete stage </a>
-            </div>
 
-    </div>
-</div>
+<link rel="stylesheet" type="text/css" href="../../static/app/content/own.css">
+<div class= "button2">
+<p><a class="button2" href="{% url 'stagecreate' %}">Stage manager</a></p>
+<p><a class="button2" href="{% url 'teamcreate' %}">Squad and Team manager</a></p>
+<p><a class="button2" href="{% url 'tournamentcreate' %}">Tournament manager</a></p>
+<p><a class="button2" href="{% url 'playercreate' %}">Player manager</a></p>
+<p><a class="button2" href="{% url 'matchcreate' %}">Match manager</a></p>
 
-    <div class="row">
-        <div class="col-sm-6">
-            <h4><br /><br />Manage your matches here</h4>
-            <hr />
-            <div class="clearfix">
-                <a href="{% url 'matchcreate' %}" class="btn btn-info right"> Manage matches </a>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-6">
-            <h4><br /><br />Manage your players here</h4>
-            <hr />
-            <div class="clearfix">
-                <a href="{% url 'playercreate' %}" class="btn btn-info right"> Manage players </a>
-            </div>
-        </div>
-    </div>
 
     {% else %}
 
@@ -50,5 +21,6 @@
     <li><a href="{% url 'login' %}">Log In</a></li>
 
     {% endif %}
+
 
     {% endblock %}
