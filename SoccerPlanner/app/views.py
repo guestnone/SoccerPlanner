@@ -4,7 +4,7 @@ Definition of views.
 
 from datetime import *
 from calendar import monthrange, calendar
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404, render_to_response
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.core.exceptions import ValidationError
 from django.contrib.auth.decorators import login_required
@@ -13,6 +13,7 @@ from app.forms import *
 from .models import *
 from django.contrib import messages
 from django import forms
+from django.contrib import messages
 from django.views import generic
 from django.utils.safestring import mark_safe
 from .utils import Calendar
@@ -81,6 +82,26 @@ def account(request):
             'title': 'Account',
         }
     )
+
+#def calendar(request):
+#    """ View for displaying calendar """
+#    assert isinstance(request, HttpRequest)
+#    if request.user.is_authenticated:
+#        return render(
+#            request,
+#            'app/calendar.html',
+#            {
+#               'title':'Calendar (editable)',
+#            }
+#        )
+#    else:
+#        return render(
+#            request,
+#            'app/calendar.html',
+#            {
+#                'title':'Calendar',
+#            }
+#        )
 
 def calendar(request):
     """ View for displaying calendar """
@@ -265,7 +286,25 @@ def stageeditsuccessful(request):
         request,
         'app/stageeditsuccessful.html'
     )
-
+def stagedelete(request):
+    if request.method == 'POST':
+            form = StageDeleteForm(request.POST)
+            if form.is_valid():
+                opt = form.cleaned_data['listOfStages']
+                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+                form = StageDeleteForm(request.POST, instance = a)
+                a.delete()
+                #form.delete()
+                return redirect('stagedeletesuccessful')
+    else:
+        form = StageDeleteForm()
+    return render(request, 'app/stagedelete.html', {'form': form})
+def stagedeletesuccessful(request):
+    assert isinstance(request,HttpRequest)
+    return render(
+        request,
+        'app/stagedeletesuccessful.html'
+    )
 class calendarview(generic.ListView):
     model = Event
     template_name = 'app/calendar.html'
@@ -316,3 +355,12 @@ def event(request, event_id=None):
         form.save()
         return HttpResponseRedirect(reverse('calendar'))
     return render(request, 'app/event.html', {'form': form})
+def captcha(request):
+    if request.POST:
+        form= CaptchaForm(request.POST)
+        if form.is_valid():
+            human = True
+            return redirect("/")
+    else:
+        form = CaptchaForm()
+    return render(request,'app/captcha.html', {'form' : form})

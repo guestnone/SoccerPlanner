@@ -3,10 +3,11 @@ Definition of urls for SoccerPlanner.
 """
 
 from datetime import datetime
-from django.urls import path
+from django.urls import path, re_path, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
+
 
 
 urlpatterns = [
@@ -35,10 +36,13 @@ urlpatterns = [
     path('accountcreatesuccessful/', views.accountcreatesuccessful, name='accountcreatesuccessful'),
     path('teamcreate/', views.teamcreate, name='teamcreate'),
     path('event/new/$', views.event, name='event_new'),
-	path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
+	  path('event/edit/(?P<event_id>\d+)/$', views.event, name='event_edit'),
     path('stagecreate/', views.stagecreate, name='stagecreate'),
     path('stagecreatesuccessful/',views.stagecreatesuccessful, name = 'stagecreatesuccessful'),
     path('stageedit/',views.stageedit, name = 'stageedit'),
-    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful'),
-    path('tournamentcreate', views.tournamentcreate, name='tournamentcreate')
+    path('tournamentcreate', views.tournamentcreate, name='tournamentcreate'),
+    path('stagedelete',views.stagedelete, name = 'stagedelete'),
+    path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
+    path('captcha', views.captcha,name='captcha'),
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
 ]
