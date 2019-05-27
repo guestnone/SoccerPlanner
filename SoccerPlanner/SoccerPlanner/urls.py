@@ -45,4 +45,4 @@ urlpatterns = [
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
     path('captcha', views.captcha,name='captcha'),
     path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
-
+]
