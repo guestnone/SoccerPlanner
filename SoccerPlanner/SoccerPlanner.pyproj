@@ -72,12 +72,8 @@
     <Content Include="app\templates\app\playeredit.html" />
     <Content Include="app\templates\app\playermanage.html" />
     <Content Include="app\templates\app\stagecreate.html" />
-    <Content Include="app\templates\app\stageedit.html" />
-    <Content Include="app\templates\app\stagemanage.html" />
     <Content Include="app\templates\app\teamcreate.html" />
     <Content Include="app\templates\app\tournamentcreate.html" />
-    <Content Include="app\templates\app\tournamentedit.html" />
-    <Content Include="app\templates\app\tournamentmanage.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />
