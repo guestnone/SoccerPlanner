@@ -17,7 +17,7 @@ from django.contrib import messages
 from django.views import generic
 from django.utils.safestring import mark_safe
 from .utils import Calendar
-
+from django.contrib.auth.views import LoginView, LogoutView
 
 def home(request):
     """Renders the home page."""
@@ -347,3 +347,4 @@ def captcha(request):
     else:
         form = CaptchaForm()
     return render(request,'app/captcha.html', {'form' : form})
+

@@ -1,5 +1,5 @@
 {% extends "app/layout.html" %}
-
+{% load recaptcha2 %}
 {% block content %}
 
 <h2>{{ title }}</h2>
@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
-            <form action="." method="post" class="form-horizontal">
+            <form action="?" method="post" class="form-horizontal">
                 {% csrf_token %}
                 <h4>Use a local account to log in.</h4>
                 <hr />
@@ -25,7 +25,23 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="hidden" name="next" value="/captcha" />
+                            <h4>Prove that you are not robot.</h4>
+                            <head>
+                                {% recaptcha_init %}
+                            </head>
+                            <body>
+                                <form id="captchaForm">
+                                  <form action="?" method="POST">
+                                          {% csrf_token %}
+                                          {{ captchaForm }}
+                                          <br>
+                                          <input type="submit" value="Submit">
+                                          <input type="hidden" name="next" value="/" />
+                                  </form>
+                                </form>
+                            </body>
+                        </form>
+                        <input type="hidden" name="next" value="/" />
                         <input type="submit" value="Log in" class="btn btn-default" />
                         <a href="{% url 'accountcreate' %}" class="btn btn-default">Create account</a>
                     </div>
@@ -40,6 +56,7 @@
         <section id="socialLoginForm"></section>
     </div>
 </div>
+
 
 {% endblock %}
 

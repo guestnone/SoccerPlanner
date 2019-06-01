@@ -7,7 +7,7 @@ from django.urls import path, re_path, include
 from django.contrib import admin
 from django.contrib.auth.views import LoginView, LogoutView
 from app import forms, views
-
+from app.forms import CaptchaForm
 
 
 urlpatterns = [
@@ -24,6 +24,7 @@ urlpatterns = [
              {
                  'title': 'Log in',
                  'year' : datetime.now().year,
+                 'captchaForm': CaptchaForm
              }
          ),
          name='login'),
