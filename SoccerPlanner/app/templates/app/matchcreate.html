@@ -1,4 +1,4 @@
-﻿{% extends "app/layout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 
@@ -6,79 +6,83 @@
 
 <h2>{{ title }}</h2>
 <br>
-<h3>Create your match here</h3>
+<div class="row">
+    <div class="col-sm-4">
+        <h3>Create your match here</h3>
+        <hr />
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in match_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Create</button>
+        </form>
+    </div>
+    <div class="col-sm-4">
+        <h3>Do you want to edit?</h3>
+        <hr />
+
+        <form method="post">
+            {% csrf_token %}
+            {% for field in matchedit_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+
+    <div class="col-sm-4">
+        <h3>Choose below and delete: </h3>
+        <hr />
+        <form method="post">
+            {% csrf_token %}
+            {% for field in matchdelete_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <p style="color:red;">Remember - there is no return after clicking delete!</p>
+            <button type="submit" style="color:red;">Delete</button>
+        </form>
+    </div>
+</div>
 <hr />
 
-<form method="post">
-    {% csrf_token %}
-    {% for field in match_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Create</button>
-</form>
-<hr />
-
-<h2>Which match do you want to edit?</h2>
-<h3>Choose below: </h3>
-
-<form method="post">
-    {% csrf_token %}
-    {% for field in matchedit_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Update</button>
-</form>
-
-
-<h2>Which match do you want to delete?</h2>
-<h3>Choose below: </h3>
-
-<form method="post">
-    {% csrf_token %}
-    {% for field in matchdelete_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <p style="color:red;">Remember - there is no return after clicking delete!</p>
-    <button type="submit" style="color:red;">Delete</button>
-</form>
-
-<hr />
-
-<h2>Add shooter to match</h2>
-<h3>Choose parameters below: </h3>
+<h3>Add shooter to match</h3>
+<br />
 
 <form method="post">
     {% csrf_token %}
     {% for field in shooters_form %}
     <p>
-        {{ field.label_tag }}<br>
+        {{ field.label_tag }}<!--<br>-->
         {{ field }}
         {% if field.help_text %}
         <small style="color: grey">{{ field.help_text }}</small>
@@ -90,15 +94,16 @@
     {% endfor %}
     <button type="submit">Add</button>
 </form>
+
 <div class="clearfix">
-    <br>
+    
     <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
 </div>
-{% else %}
+    {% else %}
 
 <h3>Your are not logged!</h3>
 <li><a href="{% url 'login' %}">Log In</a></li>
 
-{% endif %}
+    {%endif %}
 
-{% endblock %}
+    {% endblock %}
