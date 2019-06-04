@@ -178,13 +178,13 @@ def matchcreate(request):
             return redirect('matchcreate')
         elif matchedit_form.is_valid():
                 opt = matchedit_form.cleaned_data['listOfMatches']
-                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, matchID=opt.matchID)
+                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
                 matchedit_form = MatchEditForm(request.POST, instance = a)
                 matchedit_form.save()
                 return redirect('matchcreate')
         elif matchdelete_form.is_valid():
                 opt = matchdelete_form.cleaned_data['listOfMatches']
-                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, matchID=opt.matchID)
+                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
                 matchdelete_form = MatchDeleteForm(request.POST, instance = a)
                 a.delete()
                 return redirect('matchcreate')
