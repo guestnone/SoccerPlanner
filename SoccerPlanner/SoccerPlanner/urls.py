@@ -5,9 +5,8 @@ Definition of urls for SoccerPlanner.
 from datetime import datetime
 from django.urls import path, re_path, include
 from django.contrib import admin
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import *
 from app import forms, views
-
 
 
 urlpatterns = [
@@ -42,5 +41,11 @@ urlpatterns = [
     path('tournamentcreate', views.tournamentcreate, name='tournamentcreate'),
     path('stagedeletesuccessful',views.stagedeletesuccessful, name = 'stagedeletesuccessful'),
     path('captcha', views.captcha,name='captcha'),
-    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful')
+    path('stageeditsuccessful',views.stageeditsuccessful, name='stageeditsuccessful'),
+    path('account/passwordreset/', PasswordResetView.as_view(template_name='app/passwordreset.html'), name='passwordreset'),
+    path('account/passwordresetdone/', PasswordResetDoneView.as_view(template_name='app/passwordresetdone.html'), name='password_reset_done'),
+    path('account/reset/<uidb64>/<token>/',PasswordResetConfirmView.as_view(template_name='app/passwordresetconfirm.html'), name='password_reset_confirm'),
+    path('account/resetlogged/', PasswordChangeView.as_view(template_name='app/passwordresetconfirmlogged.html'), name='password_reset_confirm_logged'),
+    path('account/resetloggeddone/', PasswordChangeDoneView.as_view(template_name='app/passwordresetloggeddone.html'), name='password_change_done'),
+    path('account/reset/done/', PasswordResetCompleteView.as_view(template_name='app/passwordresetcomplete.html'), name='password_reset_complete'),
 ]

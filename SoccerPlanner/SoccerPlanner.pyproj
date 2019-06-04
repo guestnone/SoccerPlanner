@@ -74,6 +74,11 @@
     <Content Include="app\templates\app\matchcreate.html" />
     <Content Include="app\templates\app\matchedit.html" />
     <Content Include="app\templates\app\matchmanage.html" />
+    <Content Include="app\templates\app\passwordreset.html" />
+    <Content Include="app\templates\app\passwordresetconfirm.html" />
+    <Content Include="app\templates\app\passwordresetconfirmlogged.html" />
+    <Content Include="app\templates\app\passwordresetdone.html" />
+    <Content Include="app\templates\app\passwordresetloggeddone.html" />
     <Content Include="app\templates\app\playercreate.html" />
     <Content Include="app\templates\app\playeredit.html" />
     <Content Include="app\templates\app\playermanage.html" />
@@ -83,6 +88,7 @@
     <Content Include="app\templates\app\stageeditsuccessful.html" />
     <Content Include="app\templates\app\teamcreate.html" />
     <Content Include="app\templates\app\tournamentcreate.html" />
+    <Content Include="app\templates\app\passwordresetcomplete.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

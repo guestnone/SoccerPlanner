@@ -28,6 +28,7 @@
                         <input type="hidden" name="next" value="/captcha" />
                         <input type="submit" value="Log in" class="btn btn-default" />
                         <a href="{% url 'accountcreate' %}" class="btn btn-default">Create account</a>
+                        <a href="{% url 'passwordreset' %}" class="btn btn-default">Forgot Password</a>
                     </div>
                 </div>
                 {% if form.errors %}
