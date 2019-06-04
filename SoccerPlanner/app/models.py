@@ -45,8 +45,8 @@ class Team(models.Model):
 
 class Match(models.Model):
     MatchID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team1')
-    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team2')
+    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team1')
+    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, related_name='team2')
     points = models.IntegerField(default=0,)
     points2 = models.IntegerField(default=0,)
     date = models.DateField(default='2019-01-01')
