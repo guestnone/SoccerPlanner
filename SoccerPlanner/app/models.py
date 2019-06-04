@@ -88,6 +88,7 @@ class Tournament(models.Model):
 
 
 class Event(models.Model):
+    name = models.TextField(u'Event Name', blank=True, null=True)
     day = models.DateField(u'Day of the event', help_text=u'Day of the event')
     start_time = models.DateTimeField(u'Starting time', help_text=u'Starting time')
     end_time = models.DateTimeField(u'Final time', help_text=u'Final time')

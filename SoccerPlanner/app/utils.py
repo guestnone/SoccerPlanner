@@ -22,9 +22,10 @@ class Calendar(HTMLCalendar):
         d = ''
         for event in events_per_day:
             if self.request.user.is_authenticated:
-                d += f'<li> {event.get_html_url} </li>'
+                d += f'<li> {event.name} ({event.get_html_url}) </li>'
             else:
-                d += f'<li> {event.notes} </li>'
+                d += f'<li> {event.name} </li>'
+            d += f'<b2> {event.linkedMatch.team1.name} vs {event.linkedMatch.team2.name} </b2>'
 
         if day != 0:
             return f"<td><span class='date'>{day}</span><ul> {d} </ul></td>"
