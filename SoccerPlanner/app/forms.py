@@ -47,13 +47,13 @@ class PlayerCreateForm(ModelForm):
         fields=('name','secondName','role','birthDate','height',)
 
 class MatchEditForm(ModelForm):
-    listOfTeams = forms.ModelChoiceField(queryset=Match.objects.all(), label="Match", required=True, empty_label="(None)")
+    listOfMatches = forms.ModelChoiceField(queryset=Match.objects.all(), label="Match", required=True, empty_label="(None)")
     date = forms.DateField(help_text='e.g. 2019-01-01 (YYYY-MM-DD)')
     points = forms.IntegerField(label="Goals scored by team 1", required=True, min_value=0)
     points2 = forms.IntegerField(label="Goals scored by team 2", required=True, min_value=0)
     class Meta:
         model=Match
-        fields=['listOfTeams', 'date', 'points', 'points2']
+        fields=['listOfMatches', 'date', 'points', 'points2']
 
 class PlayerEditForm(ModelForm):
     listOfPlayers = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
@@ -76,6 +76,8 @@ class PlayerDeleteForm(ModelForm):
 class MatchDeleteForm(ModelForm):
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match", required = True, empty_label ="(None)")
     class Meta:
+        model = Match
+        fields = ('listOfMatches',)
 
 class ShootersForm(ModelForm):
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match", required = True, empty_label ="(None)")
@@ -84,7 +86,7 @@ class ShootersForm(ModelForm):
     class Meta:
         model = ShootersMatch
         fields = ('listOfMatches','playerID','numberOfGoals')
-
+        
 class EventForm(ModelForm):
     class Meta:
         model = Event
