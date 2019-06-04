@@ -1,4 +1,4 @@
-﻿{% extends "app/layout.html" %}
+{% extends "app/layout.html" %}
 
 {% block content %}
 
@@ -6,79 +6,85 @@
 
 <h2>{{ title }}</h2>
 <br>
-<h4>Add your player here</h4>
-<hr />
 
-<form method="post">
-    {% csrf_token %}
-    {% for field in player_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Add</button>
-</form>
-<hr />
+<div class="row">
+    <div class="col-sm-4">
+        <h4>Add your player here</h4>
+        <hr />
+        <form method="post">
+            {% csrf_token %}
+            {% for field in player_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Add</button>
+        </form>
 
+    </div>
+    <div class="col-sm-4">
 
-<h2>Which player do you want to edit?</h2>
-<h3>Choose below: </h3>
+        <h4>Choose player and edit: </h4>
+        <hr />
+        <form method="post">
+            {% csrf_token %}
+            {% for field in playeredit_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <button type="submit">Update</button>
+        </form>
 
-<form method="post">
-    {% csrf_token %}
-    {% for field in playeredit_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <button type="submit">Update</button>
-</form>
-<hr />
+    </div>
+    <div class="col-sm-4">
 
-<h2>Which player do you want to delete?</h2>
-<h3>Choose below: </h3>
-
-<form method="post">
-    {% csrf_token %}
-    {% for field in playerdelete_form %}
-    <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-        <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-    <p style="color: red">{{ error }}</p>
-    {% endfor %}
-    </p>
-    {% endfor %}
-    <p style="color:red;">Remember - there is no return after clicking delete!</p>
-    <button type="submit" style="color:red;">Delete</button>
-</form>
-<div class="clearfix">
-    <br>
-    <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+        <h4>Choose and delete: </h4>
+        <hr />
+        <form method="post">
+            {% csrf_token %}
+            {% for field in playerdelete_form %}
+            <p>
+                {{ field.label_tag }}<br>
+                {{ field }}
+                {% if field.help_text %}
+                <small style="color: grey">{{ field.help_text }}</small>
+                {% endif %}
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            <p style="color:red;">Remember - there is no return after clicking delete!</p>
+            <button type="submit" style="color:red;">Delete</button>
+        </form>
+    </div>
 </div>
 <hr />
-{% else %}
+    <div class="clearfix">
+        <br>
+        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
+    </div>
 
-<h3>Your are not logged!</h3>
-<li><a href="{% url 'login' %}">Log In</a></li>
+    {% else %}
 
-{% endif %}
+    <h3>Your are not logged!</h3>
+    <li><a href="{% url 'login' %}">Log In</a></li>
 
-{% endblock %}
+    {% endif %}
+
+    {% endblock %}
