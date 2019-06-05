@@ -28,6 +28,9 @@
                         <a href="{% url 'accountcreate' %}">
                             <input type ="button" value = "Create account" >
                         </a>
+                        <a href="{% url 'passwordreset' %}">
+                            <input type ="button" value = "Forgot Password" >
+                        </a>
                     </div>
                 </div>
                 {% if form.errors %}

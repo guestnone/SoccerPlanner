@@ -47,37 +47,48 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="app\" />
+    <Folder Include="app\images\" />
     <Folder Include="app\migrations\" />
     <Folder Include="app\static\" />
     <Folder Include="app\static\app\" />
     <Folder Include="app\static\app\content\" />
     <Folder Include="app\static\app\fonts\" />
+    <Folder Include="app\static\app\img\" />
     <Folder Include="app\static\app\scripts\" />
     <Folder Include="app\templates\" />
     <Folder Include="app\templates\app\" />
     <Folder Include="SoccerPlanner\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\images\grass.jpg" />
+    <Content Include="app\static\app\content\own.css" />
+    <Content Include="app\static\app\img\grass.jpg" />
     <Content Include="app\static\web.config" />
     <Content Include="app\templates\app\accountcreate.html" />
     <Content Include="app\templates\app\accountcreatesuccessful.html" />
     <Content Include="app\templates\app\calendar.html" />
     <Content Include="app\templates\app\account.html" />
+    <Content Include="app\templates\app\captcha.html" />
     <Content Include="app\templates\app\event.html" />
     <Content Include="app\templates\app\manage.html" />
     <Content Include="app\templates\app\matchcreate.html" />
     <Content Include="app\templates\app\matchedit.html" />
     <Content Include="app\templates\app\matchmanage.html" />
+    <Content Include="app\templates\app\passwordreset.html" />
+    <Content Include="app\templates\app\passwordresetconfirm.html" />
+    <Content Include="app\templates\app\passwordresetconfirmlogged.html" />
+    <Content Include="app\templates\app\passwordresetdone.html" />
+    <Content Include="app\templates\app\passwordresetloggeddone.html" />
     <Content Include="app\templates\app\playercreate.html" />
     <Content Include="app\templates\app\playeredit.html" />
     <Content Include="app\templates\app\playermanage.html" />
     <Content Include="app\templates\app\stagecreate.html" />
-    <Content Include="app\templates\app\stageedit.html" />
-    <Content Include="app\templates\app\stagemanage.html" />
+    <Content Include="app\templates\app\stagecreatesuccessful.html" />
+    <Content Include="app\templates\app\stagedeletesuccessful.html" />
+    <Content Include="app\templates\app\stageeditsuccessful.html" />
     <Content Include="app\templates\app\teamcreate.html" />
     <Content Include="app\templates\app\tournamentcreate.html" />
-    <Content Include="app\templates\app\tournamentedit.html" />
-    <Content Include="app\templates\app\tournamentmanage.html" />
+    <Content Include="app\templates\app\passwordresetcomplete.html" />
     <Content Include="requirements.txt" />
     <Content Include="db.sqlite3" />
     <Content Include="app\static\app\content\bootstrap.css" />

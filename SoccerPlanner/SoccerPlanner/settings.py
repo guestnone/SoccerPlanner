@@ -115,3 +115,6 @@ STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
 
 RECAPTCHA_PUBLIC_KEY = '6LfFw6QUAAAAAHuO4_qIRgEjzRCExN-MsWi9rVEh'
 RECAPTCHA_PRIVATE_KEY = '6LfFw6QUAAAAANZIm5WvKofv6bTi-dvxh1bZktWG'
+
+EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
