@@ -3,7 +3,7 @@ Definition of forms.
 """
 
 from django import forms
-from django.forms import ModelForm, DateInput
+from django.forms import ModelForm, DateInput, TextInput
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.models import User
 from app.models import Player, TeamSquad, Team, Stage, Match, Event, Tournament, ShootersMatch
@@ -11,7 +11,6 @@ from django.utils.translation import ugettext_lazy as _
 from django.views.generic.edit import UpdateView
 from snowpenguin.django.recaptcha2.fields import ReCaptchaField
 from snowpenguin.django.recaptcha2.widgets import ReCaptchaWidget
-
 class BootstrapAuthenticationForm(AuthenticationForm):
     """Authentication form which uses boostrap CSS."""
     username = forms.CharField(max_length=254, widget=forms.TextInput({'class': 'form-control', 'placeholder': 'User name'}))
@@ -45,13 +44,12 @@ class EventForm(ModelForm):
         self.fields['end_time'].input_formats = ('%Y-%m-%dT%H:%M',)
 
 class StageForm(ModelForm):
-    name = forms.CharField(max_length = 20,required = False)
+    name = forms.CharField(max_length = 20,required = True)
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(),required = False, label = "Match ",empty_label = None)
     class Meta:
         model = Stage
         listOfMatches = [Match]
         fields = ('name','listOfMatches')
-
 
 class MyModelChoiceField(forms.ModelChoiceField):
     def label_from_instance(self, obj):
@@ -166,7 +164,7 @@ class CaptchaForm(forms.Form):
 
 
 class StageDeleteForm(ModelForm):
-    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = True, empty_label = None)
+    listOfStages = MyModelChoiceField(queryset = Stage.objects.all(), label = "Stage ", required = False, empty_label = None)
     class Meta:
         model = Stage
         fields = ('listOfStages',)

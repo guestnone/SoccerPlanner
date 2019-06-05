@@ -18,7 +18,7 @@ from django.contrib import messages
 from django.views import generic
 from django.utils.safestring import mark_safe
 from .utils import Calendar
-
+from django.contrib.auth.views import LoginView, LogoutView
 
 def home(request):
     """Renders the home page."""
@@ -136,14 +136,14 @@ def stagecreate(request):
                 editStage = StageEditForm(request.POST, instance=a)
                 editStage.save()
                 return redirect('stageeditsuccessful')
-            elif deleteStage.is_valid():
-                opt = deleteStage.cleaned_data['listOfStages']
-                a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
-                form = StageDeleteForm(request.POST, instance = a)
-                a.delete()
-                return redirect('stagedeletesuccessful')
             createStage.save()
             return redirect('stagecreatesuccessful')
+        elif deleteStage.is_valid():
+            opt = deleteStage.cleaned_data['listOfStages']
+            a=Stage.objects.get(name = opt.name, listOfMatches = opt.listOfMatches)
+            form = StageDeleteForm(request.POST, instance = a)
+            a.delete()
+            return redirect('stagedeletesuccessful')
     else:
         createStage = StageForm()
         editStage = StageEditForm()
@@ -348,6 +348,9 @@ def captcha(request):
     else:
         form = CaptchaForm()
     return render(request,'app/captcha.html', {'form' : form})
+
+class NewLogin(LoginView):
+    model = LoginView
 
 def matchcreate(request):
     """View for creating matches"""
