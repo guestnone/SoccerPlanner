@@ -48,4 +48,6 @@ urlpatterns = [
     path('account/resetlogged/', PasswordChangeView.as_view(template_name='app/passwordresetconfirmlogged.html'), name='password_reset_confirm_logged'),
     path('account/resetloggeddone/', PasswordChangeDoneView.as_view(template_name='app/passwordresetloggeddone.html'), name='password_change_done'),
     path('account/reset/done/', PasswordResetCompleteView.as_view(template_name='app/passwordresetcomplete.html'), name='password_reset_complete'),
+    path('matchcreate/', views.matchcreate, name='matchcreate'),
+    path('playercreate/', views.playercreate, name='playercreate'),
 ]
