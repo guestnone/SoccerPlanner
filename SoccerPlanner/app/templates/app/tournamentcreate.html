@@ -4,7 +4,7 @@
 
 {% if user.is_authenticated %}
 
-<h2>{{ title }}</h2>
+<center><h2>{{ title }}</h2></center>
 <br>
 
 <div class="row">
@@ -65,11 +65,13 @@
                 {% endfor %}
             </p>
             {% endfor %}
-            <button type="submit" id = "button3">Delete</button>
+            <button type="submit" id = "button3" style="color:red;">Delete</button>
         </form>
     </div>
 </div>
-
+</br>
+<center><div class="button1 b1">
+<a class="button1" href="{% url 'manage' %}">Return to manage </a></center>
 {% else %}
 
 <h3>Your are not logged!</h3>

@@ -4,7 +4,7 @@
 
 {% if user.is_authenticated %}
 
-<h2>{{ title }}</h2>
+<center><h2>{{ title }}</h2></center>
 <br>
 
 <div class="row">
@@ -18,14 +18,14 @@
                 {{ field.label_tag }}<br>
                 {{ field }}
                 {% if field.help_text %}
-                <small style="color: grey">{{ field.help_text }}</small>
+                <small style="color: black">{{ field.help_text }}</small>
                 {% endif %}
                 {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
             {% endfor %}
             </p>
             {% endfor %}
-            <button type="submit">Add</button>
+            <button type="submit" id = "button3">Add</button>
         </form>
 
     </div>
@@ -40,14 +40,14 @@
                 {{ field.label_tag }}<br>
                 {{ field }}
                 {% if field.help_text %}
-                <small style="color: grey">{{ field.help_text }}</small>
+                <small style="color: black">{{ field.help_text }}</small>
                 {% endif %}
                 {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
             {% endfor %}
             </p>
             {% endfor %}
-            <button type="submit">Update</button>
+            <button type="submit" id = "button3">Update</button>
         </form>
 
     </div>
@@ -62,7 +62,7 @@
                 {{ field.label_tag }}<br>
                 {{ field }}
                 {% if field.help_text %}
-                <small style="color: grey">{{ field.help_text }}</small>
+                <small style="color: black">{{ field.help_text }}</small>
                 {% endif %}
                 {% for error in field.errors %}
             <p style="color: red">{{ error }}</p>
@@ -70,15 +70,13 @@
             </p>
             {% endfor %}
             <p style="color:red;">Remember - there is no return after clicking delete!</p>
-            <button type="submit" style="color:red;">Delete</button>
+            <button type="submit" id = "button3" style="color:red;">Delete</button>
         </form>
     </div>
 </div>
-<hr />
-    <div class="clearfix">
-        <br>
-        <a class="btn btn-info right" href="{% url 'manage' %}"> Return to manage </a>
-    </div>
+</br>
+<center><div class="button1 b1">
+    <a class="button1" href="{% url 'manage' %}">Return to manage </a></center>
 
     {% else %}
 
