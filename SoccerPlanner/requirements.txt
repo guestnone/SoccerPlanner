@@ -1,2 +1,4 @@
 django >= 2.1.6, < 3.0 
 django-recaptcha2
+python-decouple
+django-mailjet

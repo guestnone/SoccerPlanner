@@ -47,8 +47,8 @@ class Team(models.Model):
 
 class Match(models.Model):
     MatchID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
-    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team1', null=True,)
-    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team2', null=True,)
+    team1 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team1')
+    team2 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team2')
     points = models.IntegerField(default=0, null=True, blank=True)
     points2 = models.IntegerField(default=0, null=True, blank=True)
     shootersPerMatch = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE, null=True, blank=True)
