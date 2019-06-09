@@ -183,14 +183,14 @@ def teamcreate(request):
         if team_squad_form.is_valid():
             if team_squad_edit_form.is_valid():
                 opt = team_squad_edit_form.cleaned_data['listOfSquads']
-                a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+                a = TeamSquad.objects.get(name=opt.name)
                 team_squad_edit_form = TeamSquadEditForm(request.POST, instance=a)
                 team_squad_edit_form.save()
                 return redirect('teamcreate')
             team_squad_form.save()
         elif team_squad_delete_form.is_valid():
             opt = team_squad_delete_form.cleaned_data['listOfSquads']
-            a = TeamSquad.objects.get(name=opt.name, playerID=opt.playerID)
+            a = TeamSquad.objects.get(name=opt.name)
             team_squad_delete_form = TeamSquadDeleteForm(request.POST, instance=a)
             a.delete()
             return redirect('teamcreate')

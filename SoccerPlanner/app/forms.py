@@ -65,7 +65,7 @@ class StageEditForm(ModelForm):
 
 class TeamSquadForm(ModelForm):
     name = forms.CharField(max_length=20, required=True, help_text='Required.')
-    playerID = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player ", required=True, empty_label="(Nothing)")
+    playerID = forms.ModelMultipleChoiceField(queryset=Player.objects.all(), widget=forms.CheckboxSelectMultiple, label="Player ", required=True)
 
     class Meta:
         model = TeamSquad
@@ -84,8 +84,7 @@ class TeamForm(ModelForm):
 
 class TeamSquadEditForm(ModelForm):
     listOfSquads = forms.ModelChoiceField(queryset=TeamSquad.objects.all(), label="Squad ", required=True, empty_label="(Nothing)")
-    playerID = forms.ModelChoiceField(queryset=Player.objects.all(), label="Player ", required=True, empty_label="(Nothing)")
-
+    playerID = forms.ModelMultipleChoiceField(queryset=Player.objects.all(), widget=forms.CheckboxSelectMultiple, label="Player ", required=True)
     class Meta:
         model = TeamSquad
         fields = ('listOfSquads', 'name', 'playerID', )

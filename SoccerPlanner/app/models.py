@@ -32,7 +32,7 @@ class ShooterRank(models.Model):
 
 class TeamSquad(models.Model):
     name = models.CharField(max_length=20)
-    playerID = models.ForeignKey(Player, on_delete=models.CASCADE)
+    playerID = models.ManyToManyField(Player, verbose_name="list of players")
     def __str__(self):
         return self.name
 
