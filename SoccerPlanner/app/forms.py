@@ -221,8 +221,8 @@ class MatchDeleteForm(ModelForm):
 
 class ShootersForm(ModelForm):
     listOfMatches = forms.ModelChoiceField(queryset = Match.objects.all(), label = "Match", required = True, empty_label ="(None)")
-    playerID = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
-    numberOfGoals = forms.IntegerField(label='Number of shot goals', min_value=1)
+    listOfPlayers = forms.ModelChoiceField(queryset = Player.objects.all(), label = "Player", required = True, empty_label ="(None)")
+    goals = forms.IntegerField(label='Number of shot goals', min_value=1)
     class Meta:
         model = ShootersMatch
-        fields = ('listOfMatches','playerID','numberOfGoals')
+        fields = ('listOfMatches','listOfPlayers','goals')
