@@ -72,16 +72,12 @@
     <Content Include="app\templates\app\event.html" />
     <Content Include="app\templates\app\manage.html" />
     <Content Include="app\templates\app\matchcreate.html" />
-    <Content Include="app\templates\app\matchedit.html" />
-    <Content Include="app\templates\app\matchmanage.html" />
     <Content Include="app\templates\app\passwordreset.html" />
     <Content Include="app\templates\app\passwordresetconfirm.html" />
     <Content Include="app\templates\app\passwordresetconfirmlogged.html" />
     <Content Include="app\templates\app\passwordresetdone.html" />
     <Content Include="app\templates\app\passwordresetloggeddone.html" />
     <Content Include="app\templates\app\playercreate.html" />
-    <Content Include="app\templates\app\playeredit.html" />
-    <Content Include="app\templates\app\playermanage.html" />
     <Content Include="app\templates\app\stagecreate.html" />
     <Content Include="app\templates\app\stagecreatesuccessful.html" />
     <Content Include="app\templates\app\stagedeletesuccessful.html" />
@@ -121,11 +117,6 @@
     <Content Include="app\templates\app\loginpartial.html" />
     <None Include="SoccerPB - Web Deploy.pubxml" />
     <Content Include="web.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="readme.html">
-      <SubType>WebBrowser</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Interpreter Include="env\">
