@@ -106,7 +106,7 @@
 	
 	
 }
-input[type=text], select, textarea, input[type=time], input[type = submit], input[type=button], input[type=email] {
+input[type=text], select, textarea, input[type=time], input[type = submit], input[type=button], input[type=email], input[type=number] {
     padding:5px; 
 		border:2px solid rgba(41, 38, 38, 0.432); 
 		background:rgba(0, 0, 0, 0.425); 
@@ -149,3 +149,42 @@ input[type="id_username"] {
 	background: rgba(0, 0, 0, 0.425);
 }
 
+body  
+{
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+  }
+
+::-webkit-scrollbar {
+  width: 18px;
+  height: 18px;
+}
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+::-webkit-scrollbar-thumb {
+	background: rgb(34, 34, 34);
+	border: 4px none #000000;
+	border-radius: 0px;
+  }
+::-webkit-scrollbar-thumb:hover {
+  background: #5f5f5f;
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+::-webkit-scrollbar-track {
+  background: #5d5d5d;
+  border: 18px none #000000;
+  border-radius: 0px;
+}
+::-webkit-scrollbar-track:hover {
+  background: #666666;
+}
+::-webkit-scrollbar-track:active {
+  background: #1a1a1a;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
