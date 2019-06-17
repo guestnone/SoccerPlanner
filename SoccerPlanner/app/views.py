@@ -375,10 +375,7 @@ def matchcreate(request):
                 a.delete()
                 return redirect('matchcreate')
         elif shooters_form.is_valid():
-                opt = shooters_form.cleaned_data['listOfShooters']
-                a=Player.objects.get(name = opt.name,secondName = opt.secondName, role= opt.role, playerID=opt.playerID)
-                shooters_form = ShootersForm(request.POST, instance = a)
-                shooters_form.delete()
+                shooters_form.save()
                 return redirect('matchcreate')
     else:
         match_form = MatchCreateForm()

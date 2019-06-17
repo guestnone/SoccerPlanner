@@ -20,16 +20,6 @@ class Player(models.Model):
     def __str__(self):
         return self.name + " " + self.secondName
 
-
-class ShootersMatch(models.Model):
-    playerID = models.ForeignKey(Player, on_delete=models.CASCADE)
-    goals = models.IntegerField(default=0)
-
-
-class ShooterRank(models.Model):
-    playerID = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE)
-
-
 class TeamSquad(models.Model):
     name = models.CharField(max_length=20)
     playerID = models.ManyToManyField(Player, verbose_name="list of players")
@@ -51,11 +41,19 @@ class Match(models.Model):
     team2 = models.ForeignKey(Team, on_delete=models.CASCADE, null=True, related_name='team2')
     points = models.IntegerField(default=0, null=True, blank=True)
     points2 = models.IntegerField(default=0, null=True, blank=True)
-    shootersPerMatch = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE, null=True, blank=True)
+    #shootersPerMatch = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE, null=True, blank=True)
     def __str__(self):
         return self.team1.name +" "+ self.team2.name
 
+class ShootersMatch(models.Model):
+   shootID = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False, unique=True)
+   listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE, null=True, blank=True)
+   listOfPlayers = models.ForeignKey(Player, on_delete=models.CASCADE, null=True, blank=True)
+   goals = models.IntegerField(default=0, null=True, blank=True)
 
+#class ShooterRank(models.Model):
+#    playerID = models.ForeignKey(ShootersMatch, on_delete=models.CASCADE)
+    
 class Stage(models.Model):
     name = models.CharField(max_length=80)
     listOfMatches = models.ForeignKey(Match, on_delete=models.CASCADE)
