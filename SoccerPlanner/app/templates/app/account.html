@@ -6,6 +6,12 @@
 
 <h2>{{ title }}</h2>
 
+    
+<h4> First Name: {{user.first_name}}</h4>
+<h4> Last Name: {{user.last_name}}</h4>
+<h4> User Name: {{user.username}}</h4>
+<h4> User Email: {{user.email}}</h4>
+
 <div class= "button2">
     <p><a class="button2" href="{% url 'password_reset_confirm_logged' %}"> Reset Password</a></p>
 {% else %}
