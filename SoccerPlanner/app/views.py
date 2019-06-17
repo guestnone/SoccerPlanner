@@ -363,20 +363,21 @@ def matchcreate(request):
             match_form.save()
             return redirect('matchcreate')
         elif matchedit_form.is_valid():
-                opt = matchedit_form.cleaned_data['listOfMatches']
-                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
-                matchedit_form = MatchEditForm(request.POST, instance = a)
-                matchedit_form.save()
-                return redirect('matchcreate')
-        elif matchdelete_form.is_valid():
-                opt = matchdelete_form.cleaned_data['listOfMatches']
-                a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
-                matchdelete_form = MatchDeleteForm(request.POST, instance = a)
-                a.delete()
-                return redirect('matchcreate')
+            opt = matchedit_form.cleaned_data['listOfMatches']
+            a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
+            matchedit_form = MatchEditForm(request.POST, instance = a)
+            matchedit_form.save()
+            return redirect('matchcreate')
         elif shooters_form.is_valid():
-                shooters_form.save()
-                return redirect('matchcreate')
+            shooters_form.save()
+            return redirect('matchcreate')
+        elif matchdelete_form.is_valid():
+            opt = matchdelete_form.cleaned_data['listOfMatches']
+            a=Match.objects.get(team1 = opt.team1, team2 = opt.team2, MatchID=opt.MatchID)
+            matchdelete_form = MatchDeleteForm(request.POST, instance = a)
+            a.delete()
+            return redirect('matchcreate')
+        
     else:
         match_form = MatchCreateForm()
         matchedit_form = MatchEditForm()
