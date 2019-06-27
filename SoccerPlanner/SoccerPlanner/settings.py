@@ -116,7 +116,7 @@ RECAPTCHA_PRIVATE_KEY = "6LfFw6QUAAAAANZIm5WvKofv6bTi-dvxh1bZktWG"
 # uncomment below and comment up to turn on sending reset mail
 # mailjet api keys required
 EMAIL_BACKEND = "django_mailjet.backends.MailjetBackend"
-MAILJET_API_KEY = "207eb553c2033bc11f7e11b959d806de"
-MAILJET_API_SECRET = "7c4417fad6e99754e50c874f2bba8eb4"
+MAILJET_API_KEY = "a"
+MAILJET_API_SECRET = "a"
 # same as registered on mailjet's control panel
-DEFAULT_FROM_EMAIL = "pat10011@gmail.com"
+DEFAULT_FROM_EMAIL = "a"
